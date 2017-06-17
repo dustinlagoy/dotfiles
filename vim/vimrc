@@ -1,0 +1,58 @@
+source $HOME/.vimprofile
+
+" General maps
+noremap j k
+noremap k j
+"noremap y "+y
+"noremap yy "+yy
+"noremap p "+p
+imap vv <Esc>
+cmap vv <C-c>
+imap <c-f> <c-g>u<Esc>[s1z=`]a<c-g>u
+nmap <c-f> [s1z=<c-o>
+imap <c-t> <c-g>u<Esc>]s1z=`]a<c-g>u
+nmap <c-t> ]s1z=
+
+" Syntax and tabstops
+let fortran_free_source=1
+let g:tex_conceal="adgm"
+syntax on
+set autoindent
+set tabstop=2
+set shiftwidth=2
+set expandtab
+
+" Searching
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+" Search results in middle of page
+nnoremap n nzz
+nnoremap N Nzz
+
+set textwidth=79
+set formatoptions=c,q,r,a,w,l
+set ruler
+
+set clipboard=unnamed
+set mouse=a
+
+hi clear SpellBad
+hi SpellBad cterm=underline,bold
+set thesaurus +=/home/dustin/.vim/mthesaur.txt
+
+set history=5000
+
+set number
+
+autocmd Bufenter stdin set nonumber
+autocmd Bufenter *txt set fo=q,r,a,w,l,t,c | set spell
+autocmd Bufenter *tex set fo=q,r,a,w,l,t,c | set spell
+autocmd Bufenter *f90 set fo=wracql
+autocmd Bufenter *md set fo=wracqlt | set tabstop=4 | set shiftwidth=4
+autocmd Bufenter *cc set fo=wracql | set tabstop=4 | set shiftwidth=4
+
+autocmd BufWritePost *md silent !~/bin/pancomp.sh % 2>/dev/null &
+com Panc !pancomp.sh % 
+com Texc !tex2pdf.sh % 

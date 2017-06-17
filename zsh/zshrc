@@ -1,0 +1,115 @@
+# Automatic zsh configuration
+zstyle ':completion:*' completer _expand _complete _ignored _approximate
+zstyle ':completion:*' completions 1
+zstyle ':completion:*' format 'Completing %d'
+zstyle ':completion:*' glob 1
+zstyle ':completion:*' insert-unambiguous true
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]} m:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+r:|[._-]=** r:|=** l:|=*'
+zstyle ':completion:*' max-errors 3
+zstyle ':completion:*' menu select=long
+zstyle ':completion:*' original true
+zstyle ':completion:*' preserve-prefix '//[^/]##/'
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*' substitute 1
+zstyle ':completion:*' verbose true
+zstyle :compinstall filename "$HOME/.zshrc"
+autoload -Uz compinit
+compinit
+
+# Source system specific settings
+source ~/.zprofile
+
+# Run ssh agent if not in an ssh session
+if test -z "$SSH_TTY"; then
+    if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+        ssh-agent > ~/.ssh-agent-thing
+    fi
+    if [[ "$SSH_AGENT_PID" == "" ]]; then
+        eval "$(<~/.ssh-agent-thing)" > /dev/null
+    fi
+else
+    # We're in an ssh session so...
+    # Auto launch tmux if possible
+    if which tmux >/dev/null 2>&1; then
+        # if not inside a tmux session...
+        if test -z "$TMUX"; then
+            # kick out the display variable
+            echo $DISPLAY > ~/.display.txt
+            # attach to any unused sessions, or start a new session
+            tmux attach -t $(tmux ls | grep -v attached | head -1 | cut -f1 -d:) || tmux new-session
+        fi
+        # when quitting tmux, quit totally
+        while test -z ${TMUX}; do
+            exit
+        done
+    # Use screen otherwise
+    elif which screen >/dev/null 2>&1; then
+        # if not inside a screen session...
+        if test -z "$STY"; then
+            # kick out the display variable
+            echo $DISPLAY > ~/.display.txt
+            # attach to any unused sessions, or start a new session
+            screen -R
+        fi
+        # when quitting screen, quit totally
+        while test -z ${STY}; do
+            exit
+        done
+    fi
+fi
+
+HISTFILE=~/.histfile
+HISTSIZE=16384
+SAVEHIST=262144
+setopt sharehistory appendhistory autocd extendedglob nomatch notify prompt_subst
+setopt correct
+bindkey -v
+
+autoload -U colors && colors
+
+# Vim-like bindings
+bindkey "^R" history-incremental-search-backward
+bindkey -a "/" history-incremental-search-backward
+bindkey -a "k" vi-down-line-or-history
+bindkey -a "j" up-line-or-history
+bindkey -v "vv" vi-cmd-mode
+bindkey -v "^[[8~" end-of-line
+bindkey -a "^[[8~" vi-end-of-line
+bindkey -v "^[[7~" beginning-of-line
+bindkey -a "^[[7~" vi-beginning-of-line
+
+export EDITOR="vim"
+
+alias :q="exit"
+alias ls='ls -G'
+alias ll='ls -G -lah'
+alias vi='vim'
+alias rm='rm -i'
+alias grep='grep --color'
+
+history(){
+    command grep -irn --color "$@" $HOME/.histfile
+}
+alias hist='history'
+
+function small_pwd {
+    if test -n "$SSH_TTY"; then
+        # while we are here, update $DISPLAY
+        export DISPLAY=$(cat ~/.display.txt)
+    fi
+    #echo $(pwd | sed -e "s,^$HOME,~," | sed -e "s,\([^/]\)[^/]*/,\1/,g")
+    # Use ~ for $HOME
+    cwd=$(pwd | sed -e "s,^$HOME,~,")
+    # Keep the current directory intact
+    end=$(echo $cwd | sed -e 's,.*/,,')
+    # Remove all vowels and numbers, except at start of words
+    start=$(echo   $cwd | sed -e 's,\([^/_-]\)[aeiouAEIOU1234567890],\1,g' | sed -e 's,[^/]*$,,')
+    start=$(echo $start | sed -e 's,\([^/_-]\)[aeiouAEIOU1234567890],\1,g')
+    start=$(echo $start | sed -e 's,\([^/_-]\)[aeiouAEIOU1234567890],\1,g')
+    echo ${start}${end}
+}
+PROMPT='%{$fg[$term_color]%}%n@%m%{$reset_color%}:%{$fg[$term_color]%}$(small_pwd)%{$reset_color%}$ '
+#PROMPT='%{$fg[blue]%}%n@%m%{$reset_color%}:%{$fg[red]%}~%{$reset_color%}$ '
+RPROMPT="[%{$fg[$term_color]%}%?%{$reset_color%}]"
