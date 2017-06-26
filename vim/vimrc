@@ -12,6 +12,7 @@ imap <c-f> <c-g>u<Esc>[s1z=`]a<c-g>u
 nmap <c-f> [s1z=<c-o>
 imap <c-t> <c-g>u<Esc>]s1z=`]a<c-g>u
 nmap <c-t> ]s1z=
+let mapleader=","
 
 " Syntax and tabstops
 let fortran_free_source=1
@@ -52,6 +53,10 @@ autocmd Bufenter *tex set fo=q,r,a,w,l,t,c | set spell
 autocmd Bufenter *f90 set fo=wracql
 autocmd Bufenter *md set fo=wracqlt | set tabstop=4 | set shiftwidth=4
 autocmd Bufenter *cc set fo=wracql | set tabstop=4 | set shiftwidth=4
+autocmd FileType c,cpp set comments-=://
+autocmd FileType c,cpp set comments+=://!
+autocmd FileType c,cpp set comments+=:///
+autocmd FileType c,cpp set comments+=://
 
 autocmd BufWritePost *md silent !~/bin/pancomp.sh % 2>/dev/null &
 com Panc !pancomp.sh % 
