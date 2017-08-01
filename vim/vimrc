@@ -12,7 +12,13 @@ imap <c-f> <c-g>u<Esc>[s1z=`]a<c-g>u
 nmap <c-f> [s1z=<c-o>
 imap <c-t> <c-g>u<Esc>]s1z=`]a<c-g>u
 nmap <c-t> ]s1z=
+
+" Advanced maps
 let mapleader=","
+" Wrap comments
+map <Leader>a <Leader>r<Leader>s
+map <Leader>r 0/(<Enter>a<Enter>vv:noh<Enter>vv
+map <Leader>s 080l/,<Enter>Nlxi<Enter>vv:noh<Enter>vv
 
 " Syntax and tabstops
 let fortran_free_source=1
@@ -60,6 +66,11 @@ autocmd FileType c,cpp set comments+=://!
 autocmd FileType c,cpp set comments+=:///
 autocmd FileType c,cpp set comments+=://
 autocmd FileType c,cpp,fortran set fo=wracql | set tabstop=4 | set shiftwidth=4
+
+" Python
+let g:pyindent_open_paren = '&sw'
+let g:pyindent_nested_paren = '&sw'
+let g:pyindent_continue = '&sw'
 
 autocmd BufWritePost *md silent !~/bin/pancomp.sh % 2>/dev/null &
 autocmd BufWritePost *tex silent !~/bin/tex2pdf.sh % 2>&1 1>/dev/null &
