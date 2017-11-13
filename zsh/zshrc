@@ -84,8 +84,8 @@ bindkey -a "^[[7~" vi-beginning-of-line
 export EDITOR="vim"
 
 alias :q="exit"
-alias ls='ls -G'
-alias ll='ls -G -lah'
+alias ls='ls --color'
+alias ll='ls --color -lah'
 alias vi='vim'
 alias rm='rm -i'
 alias grep='grep --color'
