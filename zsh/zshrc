@@ -111,6 +111,5 @@ function small_pwd {
     start=$(echo $start | sed -e 's,\([^/_-]\)[aeiouAEIOU1234567890],\1,g')
     echo ${start}${end}
 }
-PROMPT='%{$fg[$term_color]%}%n@%m%{$reset_color%}:%{$fg[$term_color]%}$(small_pwd)%{$reset_color%}$ '
-#PROMPT='%{$fg[blue]%}%n@%m%{$reset_color%}:%{$fg[red]%}~%{$reset_color%}$ '
-RPROMPT="[%{$fg[$term_color]%}%?%{$reset_color%}]"
+PROMPT='%F{$term_color}%n@%m:$(small_pwd)%{$reset_color%}$ '
+RPROMPT='[%F{$term_color}%?%{$reset_color%}]'
