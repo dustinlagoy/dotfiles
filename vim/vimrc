@@ -69,6 +69,9 @@ autocmd FileType c,cpp set comments+=:///
 autocmd FileType c,cpp set comments+=://
 autocmd FileType c,cpp,fortran | set tabstop=4 | set shiftwidth=4
 autocmd FileType gitcommit set fo-=a
+autocmd Bufenter .vimprofile set ft=vim
+autocmd Bufenter *.rdf set ft=config | syn match configcomment "!.*"
+autocmd FileType cython set commentstring=#%s
 
 " Python
 let g:pyindent_open_paren = '&sw'
