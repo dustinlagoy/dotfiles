@@ -44,8 +44,9 @@ nnoremap n nzz
 nnoremap N Nzz
 
 set textwidth=79
-set colorcolumn=81
-set formatoptions=c,q,r,a,w,l
+set colorcolumn=80
+set formatoptions=rcql
+set nojoinspaces
 set ruler
 
 set clipboard=unnamed
@@ -60,13 +61,14 @@ set history=5000
 set number
 
 autocmd Bufenter stdin set nonumber
-autocmd FileType tex,text set fo=q,r,a,w,l,t,c | set spell
-autocmd FileType markdown set fo=wracqlt | set tabstop=4 | set shiftwidth=4
+autocmd FileType tex,text set fo=racqlt | set spell
+autocmd FileType markdown set fo=racqlt | set tabstop=4 | set shiftwidth=4
 autocmd FileType c,cpp set comments-=://
 autocmd FileType c,cpp set comments+=://!
 autocmd FileType c,cpp set comments+=:///
 autocmd FileType c,cpp set comments+=://
-autocmd FileType c,cpp,fortran set fo=wracql | set tabstop=4 | set shiftwidth=4
+autocmd FileType c,cpp,fortran | set tabstop=4 | set shiftwidth=4
+autocmd FileType gitcommit set fo-=a
 
 " Python
 let g:pyindent_open_paren = '&sw'
