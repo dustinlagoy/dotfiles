@@ -3,6 +3,11 @@ source $HOME/.vimprofile
 " General maps
 noremap j k
 noremap k j
+" Use K,J to skip half screenfulls
+noremap K <c-d>
+noremap J <c-u>
+" 'Merge' lines, since we can't 'join' them
+noremap M J
 "noremap y "+y
 "noremap yy "+yy
 "noremap p "+p
