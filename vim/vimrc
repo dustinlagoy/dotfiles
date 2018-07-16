@@ -29,7 +29,8 @@ map <Leader>s 080l/,<Enter>Nlxi<Enter>vv:noh<Enter>vv
 
 " Syntax and tabstops
 let fortran_free_source=1
-let g:tex_conceal="adgm"
+let g:tex_conceal="adgmb"
+hi Conceal NONE
 syntax on
 set autoindent
 set tabstop=2
