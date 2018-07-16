@@ -25,6 +25,7 @@ source ~/.zprofile
 if test -z "$SSH_TTY"; then
     if ! pgrep -u "$USER" ssh-agent > /dev/null; then
         ssh-agent > ~/.ssh-agent-thing
+        eval "$(<~/.ssh-agent-thing)" > /dev/null
     fi
     if [[ "$SSH_AGENT_PID" == "" ]]; then
         eval "$(<~/.ssh-agent-thing)" > /dev/null
@@ -111,5 +112,5 @@ function small_pwd {
     start=$(echo $start | sed -e 's,\([^/_-]\)[aeiouAEIOU1234567890],\1,g')
     echo ${start}${end}
 }
-PROMPT='%F{$term_color}%n@%m $(pwd)  [%?]
+PROMPT='%F{$term_color}%n@%m %~  [%?]
 %{$reset_color%}$ '
