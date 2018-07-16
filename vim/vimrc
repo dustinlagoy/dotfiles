@@ -74,6 +74,7 @@ autocmd FileType c,cpp set comments-=://
 autocmd FileType c,cpp set comments+=://!
 autocmd FileType c,cpp set comments+=:///
 autocmd FileType c,cpp set comments+=://
+autocmd FileType c,cpp set commentstring=//%s
 autocmd FileType c,cpp,fortran | set tabstop=4 | set shiftwidth=4
 autocmd FileType gitcommit set fo-=a
 autocmd Bufenter .vimprofile set ft=vim
