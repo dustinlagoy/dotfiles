@@ -21,6 +21,7 @@ imap <c-t> <c-g>u<Esc>]s1z=`]a<c-g>u
 nmap <c-t> ]s1z=
 
 " Advanced maps
+map F :e<Enter>G
 let mapleader=","
 " Wrap comments
 map <Leader>a <Leader>r<Leader>s
