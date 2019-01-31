@@ -31,8 +31,9 @@ map <Leader>s 079l/,<Enter>Nlxi<Enter>vv:noh<Enter>vv
 " Syntax and tabstops
 let fortran_free_source=1
 let g:tex_conceal="adgmb"
-hi Conceal NONE
-set concealcursor=""
+hi Conceal ctermfg=darkgray ctermbg=None
+set conceallevel=2
+set concealcursor=nc
 syntax on
 set autoindent
 set tabstop=4
@@ -71,7 +72,7 @@ set number
 
 autocmd Bufenter stdin set nonumber
 autocmd FileType tex,text,mail set fo=racqlt | set spell
-autocmd FileType markdown set fo=racqlt | set tabstop=4 | set shiftwidth=4
+autocmd FileType markdown set fo=racqlt | set tabstop=4 | set shiftwidth=4 | set concealcursor=
 autocmd FileType c,cpp,cuda set comments-=://
 autocmd FileType c,cpp,cuda set comments+=://!
 autocmd FileType c,cpp,cuda set comments+=:///
