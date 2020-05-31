@@ -52,7 +52,7 @@ else
             # kick out the display variable
             echo $DISPLAY > ~/.display.txt
             # attach to any unused sessions, or start a new session
-            screen -R
+            screen -RR
         fi
         # when quitting screen, quit totally
         while test -z ${STY}; do
