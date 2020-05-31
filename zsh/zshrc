@@ -92,7 +92,7 @@ alias rm='rm -i'
 alias grep='grep --color'
 
 history(){
-    command grep -irn --color "$@" $HOME/.histfile
+    command sed 's/^. [0-9]*...//' < $HOME/.histfile | grep -i --color "$@"
 }
 alias hist='history'
 
