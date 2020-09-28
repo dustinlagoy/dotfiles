@@ -32,12 +32,16 @@ if test -z "$SSH_TTY"; then
     fi
 else
     # We're in an ssh session so...
+    # kick out the display variable
+    echo $DISPLAY > ~/.display.txt
+    # update the ssh socket
+    if [[ -S "$SSH_AUTH_SOCK" && ! -h "$SSH_AUTH_SOCK" ]]; then
+        ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock;
+    fi
     # Auto launch tmux if possible
     if which tmux >/dev/null 2>&1; then
         # if not inside a tmux session...
         if test -z "$TMUX"; then
-            # kick out the display variable
-            echo $DISPLAY > ~/.display.txt
             # attach to any unused sessions, or start a new session
             tmux attach -t $(tmux ls | grep -v attached | head -1 | cut -f1 -d:) || tmux new-session
         fi
@@ -49,8 +53,6 @@ else
     elif which screen >/dev/null 2>&1; then
         # if not inside a screen session...
         if test -z "$STY"; then
-            # kick out the display variable
-            echo $DISPLAY > ~/.display.txt
             # attach to any unused sessions, or start a new session
             screen -RR
         fi
@@ -111,6 +113,13 @@ function small_pwd {
     start=$(echo $start | sed -e 's,\([^/_-]\)[aeiouAEIOU1234567890],\1,g')
     start=$(echo $start | sed -e 's,\([^/_-]\)[aeiouAEIOU1234567890],\1,g')
     echo ${start}${end}
+}
+precmd() {
+    if [[ -n "$SSH_TTY" && "$TERM" != xterm ]]; then
+        # while we are here, update $DISPLAY
+        export DISPLAY=$(cat ~/.display.txt)
+        export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock;
+    fi
 }
 PROMPT='%F{$term_color}%n@%m %~  [%?]
 %{$reset_color%}$ '
