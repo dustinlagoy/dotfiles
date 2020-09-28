@@ -71,7 +71,7 @@ set history=5000
 set number
 
 autocmd Bufenter stdin set nonumber
-autocmd FileType tex,text,mail set fo=racqlt | set spell
+autocmd FileType tex,text,mail set fo=racql | set spell
 autocmd FileType markdown set fo=racqlt | set tabstop=4 | set shiftwidth=4 | set concealcursor=
 autocmd FileType c,cpp,cuda set comments-=://
 autocmd FileType c,cpp,cuda set comments+=://!

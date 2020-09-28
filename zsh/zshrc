@@ -64,7 +64,7 @@ fi
 HISTFILE=~/.histfile
 HISTSIZE=16384
 SAVEHIST=262144
-setopt hist_ignore_dups hist_find_no_dups
+setopt hist_ignore_dups hist_find_no_dups hist_ignore_space
 setopt sharehistory appendhistory autocd extendedglob nomatch notify prompt_subst
 setopt correct
 bindkey -v
