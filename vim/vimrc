@@ -1,5 +1,8 @@
 source $HOME/.vimprofile
 
+" powerline
+set laststatus=2
+
 " General maps
 noremap j gk
 noremap k gj

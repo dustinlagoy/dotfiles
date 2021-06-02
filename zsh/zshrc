@@ -21,6 +21,8 @@ compinit
 # Source system specific settings
 source ~/.zprofile
 
+. /usr/share/powerline/bindings/zsh/powerline.zsh
+
 # Run ssh agent if not in an ssh session
 if test -z "$SSH_TTY"; then
     if ! pgrep -u "$USER" ssh-agent > /dev/null; then
@@ -120,5 +122,3 @@ precmd() {
         export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock;
     fi
 }
-PROMPT='%F{$term_color}%n@%m %~  [%?]
-%{$reset_color%}$ '
