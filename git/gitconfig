@@ -1,0 +1,20 @@
+[user]
+    name = Dustin Lagoy
+    email = dustin@lagoy.org
+[log]
+    date = short
+[format]
+    pretty = "%C(yellow) %h%Creset%C(red)%d%Creset %Cgreen%cd%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset"
+[alias]
+    l = log --branches --remotes --tags --graph --notes HEAD -n 20
+[core]
+    autocrlf = false
+    safecrlf = true
+    eol = lf
+[merge]
+    tool = vimdiff
+    ff = false
+[pull]
+    ff = only
+[color]
+    ui = auto
