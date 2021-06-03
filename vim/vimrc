@@ -1,73 +1,41 @@
 source $HOME/.vimprofile
 
-" powerline
-set laststatus=2
+"""OPTIONS"""
 
-" General maps
-noremap j gk
-noremap k gj
-onoremap <silent> j gk
-onoremap <silent> k gj
-" Use K,J to skip half screenfulls
-noremap K <c-d>
-noremap J <c-u>
-" 'Merge' lines, since we can't 'join' them
-noremap M J
-imap vv <Esc>
-imap vV vt<Bs>vt<Bs>
-cmap vv <C-c>
-cmap VV <c-f>
-imap <c-f> <c-g>u<Esc>[s1z=`]a<c-g>u
-nmap <c-f> [s1z=<c-o>
-imap <c-t> <c-g>u<Esc>]s1z=`]a<c-g>u
-nmap <c-t> ]s1z=
-nmap o A<Return>
-
-" Advanced maps
-map F :e<Enter>G
-let mapleader=","
-" Wrap comments
-map <Leader>a <Leader>r<Leader>s
-map <Leader>r 0/(<Enter>a<Enter>vv:noh<Enter>vv
-map <Leader>s 079l/,<Enter>Nlxi<Enter>vv:noh<Enter>vv
-
-
-" Syntax and tabstops
-let fortran_free_source=1
-let g:tex_conceal="adgmb"
-hi Conceal ctermfg=darkgray ctermbg=None
-set conceallevel=2
-set concealcursor=
 syntax on
+set clipboard=unnamedplus
+set mouse=a
 set autoindent
+set ruler
+
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
 
-highlight ExtraWhitespace ctermbg=darkgreen guibg=lightgreen
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-autocmd Syntax * syn match ExtraWhitespace /\s\+$\|\t\+/ containedin=ALL
-" make menu (especially for YCM) easier to read
-highlight Pmenu ctermfg=17
+set textwidth=79
+set colorcolumn=80
 
-" Searching
+set formatoptions=rcql
+set nojoinspaces
+
+" conceal
+let g:tex_conceal="adgmb"
+" hi Conceal ctermfg=darkgray ctermbg=None
+set conceallevel=2
+set concealcursor=
+hi Conceal ctermbg=None
+" powerline
+set laststatus=2
+
+" searching
 set incsearch
 set hlsearch
 set ignorecase
 set smartcase
-" Search results in middle of page
+" search results in middle of page
 nnoremap n nzz
 nnoremap N Nzz
-
-set textwidth=79
-set colorcolumn=80
-set formatoptions=rcql
-set nojoinspaces
-set ruler
-
-set clipboard=unnamed
-set mouse=a
 
 hi clear SpellBad
 hi SpellBad cterm=underline,bold
@@ -82,7 +50,44 @@ let winsize=100
 set breakindent
 set showbreak=\ \ 
 
-function Text()
+" folding
+set foldmethod=syntax
+nnoremap <Space> za
+
+" fix status line
+set shortmess=a
+set cmdheight=2
+
+" highlight bad whitespace
+highlight ExtraWhitespace ctermbg=darkgreen guibg=lightgreen
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd Syntax * syn match ExtraWhitespace /\s\+$\|\t\+/ containedin=ALL
+
+
+"""MAPS"""
+
+" colemak swap j/k for navigation
+noremap j gk
+noremap k gj
+onoremap <silent> j gk
+onoremap <silent> k gj
+" use K,J to skip half screenfulls
+noremap K <c-d>
+noremap J <c-u>
+" J used to 'join' lines, use M instead to 'merge' them
+noremap M J
+
+" automatically wrap paramter lists in code
+let mapleader=","
+map <Leader>a <Leader>r<Leader>s
+map <Leader>r 0/(<Enter>a<Enter><Esc>:noh<Enter><Esc>
+map <Leader>s 079l/,<Enter>Nlxi<Enter><Esc>:noh<Enter><Esc>
+
+
+
+"""FILETYPE SPECIFICS"""
+
+function SoftWrapText()
     set wrap
     set linebreak
     set colorcolumn=
@@ -91,30 +96,20 @@ function Text()
 endfunction
 
 autocmd Bufenter stdin set nonumber
-autocmd FileType tex, set fo=racql | set spell
+autocmd FileType tex set fo=racql | set spell
 autocmd FileType mail set syntax=markdown
-autocmd FileType text,mail,markdown set fo= | set spell | exe Text()
+autocmd FileType text,mail,markdown set fo= | set spell | exe SoftWrapText()
 autocmd FileType markdown set tabstop=4 | set shiftwidth=4 | set concealcursor=
 autocmd FileType c,cpp,fortran | set tabstop=4 | set shiftwidth=4
 autocmd FileType gitcommit set fo-=a | set nofoldenable
 autocmd Bufenter .vimprofile set ft=vim
-autocmd Bufenter *.rdf set ft=config | syn match configcomment "!.*"
 autocmd FileType cython set commentstring=#%s
-
-" Python
+" python
 let g:pyindent_open_paren = '&sw'
 let g:pyindent_nested_paren = '&sw'
 let g:pyindent_continue = '&sw'
-
+" auto compile
 autocmd BufWritePost *md silent !~/bin/pancomp.sh % 2>/dev/null &
-autocmd BufWritePost *tex silent !~/bin/tex2pdf.sh % 2>&1 1>/dev/null &
 com Panc execute 'silent !pancomp.sh % &' | redraw!
+autocmd BufWritePost *tex silent !~/bin/tex2pdf.sh % 2>&1 1>/dev/null &
 com Texc !tex2pdf.sh %
-
-" Folding
-set foldmethod=syntax
-nnoremap <Space> za
-
-" Fix status line
-set shortmess=a
-set cmdheight=2
