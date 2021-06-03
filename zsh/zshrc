@@ -21,50 +21,6 @@ compinit
 # Source system specific settings
 source ~/.zprofile
 
-. /usr/share/powerline/bindings/zsh/powerline.zsh
-
-# Run ssh agent if not in an ssh session
-if test -z "$SSH_TTY"; then
-    if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-        ssh-agent > ~/.ssh-agent-thing
-        eval "$(<~/.ssh-agent-thing)" > /dev/null
-    fi
-    if [[ "$SSH_AGENT_PID" == "" ]]; then
-        eval "$(<~/.ssh-agent-thing)" > /dev/null
-    fi
-else
-    # We're in an ssh session so...
-    # kick out the display variable
-    echo $DISPLAY > ~/.display.txt
-    # update the ssh socket
-    if [[ -S "$SSH_AUTH_SOCK" && ! -h "$SSH_AUTH_SOCK" ]]; then
-        ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock;
-    fi
-    # Auto launch tmux if possible
-    if which tmux >/dev/null 2>&1; then
-        # if not inside a tmux session...
-        if test -z "$TMUX"; then
-            # attach to any unused sessions, or start a new session
-            tmux attach -t $(tmux ls | grep -v attached | head -1 | cut -f1 -d:) || tmux new-session
-        fi
-        # when quitting tmux, quit totally
-        while test -z ${TMUX}; do
-            exit
-        done
-    # Use screen otherwise
-    elif which screen >/dev/null 2>&1; then
-        # if not inside a screen session...
-        if test -z "$STY"; then
-            # attach to any unused sessions, or start a new session
-            screen -RR
-        fi
-        # when quitting screen, quit totally
-        while test -z ${STY}; do
-            exit
-        done
-    fi
-fi
-
 HISTFILE=~/.histfile
 HISTSIZE=16384
 SAVEHIST=262144
@@ -99,26 +55,95 @@ history(){
 }
 alias hist='history'
 
-function small_pwd {
-    if test -n "$SSH_TTY"; then
-        # while we are here, update $DISPLAY
-        export DISPLAY=$(cat ~/.display.txt)
-    fi
-    #echo $(pwd | sed -e "s,^$HOME,~," | sed -e "s,\([^/]\)[^/]*/,\1/,g")
-    # Use ~ for $HOME
-    cwd=$(pwd | sed -e "s,^$HOME,~,")
-    # Keep the current directory intact
-    end=$(echo $cwd | sed -e 's,.*/,,')
-    # Remove all vowels and numbers, except at start of words
-    start=$(echo   $cwd | sed -e 's,\([^/_-]\)[aeiouAEIOU1234567890],\1,g' | sed -e 's,[^/]*$,,')
-    start=$(echo $start | sed -e 's,\([^/_-]\)[aeiouAEIOU1234567890],\1,g')
-    start=$(echo $start | sed -e 's,\([^/_-]\)[aeiouAEIOU1234567890],\1,g')
-    echo ${start}${end}
-}
 precmd() {
-    if [[ -n "$SSH_TTY" && "$TERM" != xterm ]]; then
-        # while we are here, update $DISPLAY
+    if currently_in_ssh_session
+    then
         export DISPLAY=$(cat ~/.display.txt)
-        export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock;
+        if [[ $WANTS_REMOTE_SSH_AGENT == 'true' ]]
+        then
+            eval "$(<~/.ssh-agent-thing-remote)" > /dev/null
+        fi
     fi
 }
+
+
+run_zsh_setup() {
+    # Run ssh agent if not in an ssh session
+    if currently_in_ssh_session; then
+        setup_ssh_session
+    else
+        start_or_connect_to_ssh_agent
+    fi
+}
+
+currently_in_ssh_session() {
+    test -n "$SSH_TTY"
+}
+
+have_ssh_agent() {
+    test -n "$SSH_AUTH_SOCK"
+}
+
+have_remote_ssh_agent() {
+    have_ssh_agent && test -z $SSH_AGENT_PID
+}
+
+setup_ssh_session() {
+    echo $DISPLAY > ~/.display.txt
+    if have_remote_ssh_agent
+    then
+        echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK; export SSH_AUTH_SOCK;" > ~/.ssh-agent-thing-remote
+        export WANTS_REMOTE_SSH_AGENT='true'
+    else
+        start_or_connect_to_ssh_agent
+    fi
+    launch_multiplexer
+}
+
+start_or_connect_to_ssh_agent() {
+    if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+        echo "starting ssh agent"
+        ssh-agent > ~/.ssh-agent-thing
+        eval "$(<~/.ssh-agent-thing)" > /dev/null
+    fi
+    if [[ "$SSH_AGENT_PID" == "" ]]; then
+        echo "connecting to ssh agent"
+        eval "$(<~/.ssh-agent-thing)" > /dev/null
+    fi
+}
+
+launch_multiplexer() {
+    if which tmux >/dev/null 2>&1
+    then
+        launch_tmux
+    elif which screen >/dev/null 2>&1
+    then
+        launch_screen
+    fi
+}
+
+launch_tmux() {
+   # if not already inside a tmux session...
+   if test -z "$TMUX"; then
+       # attach to any unused sessions, or start a new session
+       tmux attach -t $(tmux ls | grep -v attached | head -1 | cut -f1 -d:) || tmux new-session
+   fi
+   # when quitting tmux, quit totally
+   while test -z ${TMUX}; do
+       exit
+   done
+}
+
+launch_screen() {
+    # if not already inside a screen session...
+    if test -z "$STY"; then
+        # attach to any unused sessions, or start a new session
+        screen -RR
+    fi
+    # when quitting screen, quit totally
+    while test -z ${STY}; do
+        exit
+    done
+}
+
+run_zsh_setup
