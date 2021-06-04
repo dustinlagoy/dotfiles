@@ -1,0 +1,141 @@
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+    Plug 'w0rp/ale'
+    Plug 'dkarter/bullets.vim'
+    Plug 'chrisbra/csv.vim'
+    " Plug 'Raimondi/delimitMate'
+    Plug 'fidian/hexmode'
+    Plug 'Yggdroot/indentLine'
+    Plug 'JuliaEditorSupport/julia-vim'
+    Plug 'chrisbra/recover.vim'
+    Plug 'tmhedberg/SimpylFold'
+    " Plug 'vim-syntastic/syntastic'
+    Plug 'tomtom/tcomment_vim'
+    Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-eunuch'
+    Plug 'tpope/vim-fugitive'
+    Plug 'plasticboy/vim-markdown'
+    " Plug 'vim-pandoc/vim-pandoc' | Plug 'vim-pandoc/vim-pandoc-syntax'
+    Plug 'dhruvasagar/vim-table-mode'
+    Plug 'sedm0784/vim-you-autocorrect'
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --system-libclang' }
+call plug#end()
+
+
+
+" ale
+let g:ale_cpp_clangtidy_checks = ['*', '-cppcoreguidelines-pro-bounds-pointer-arithmetic']
+" let g:ale_linters = {
+" \   'python': ['pycodestyle'],
+" \}
+let g:ale_python_pylint_options = '--extension-pkg-whitelist=PyQt5'
+let g:ale_python_flake8_change_directory = 0
+
+
+
+" bullets
+let g:bullets_outline_levels = ['num', 'abc', 'std*']
+function InList()
+    let line=getline('.')
+    if line =~ '^ *\([*+]\|[a-z]\+\.\|[0-9]\+\.\)'
+        return 1
+    endif
+endfunction
+" Promote and Demote outline level
+" inoremap <expr> <Tab> InList() ? "\<C-o>:BulletDemote\<cr>" : "\<Tab>"
+au FileType markdown autocmd InsertEnter * inoremap <expr> <Tab> InList() ? "\<C-o>:BulletDemote\<cr>" : "\<Tab>"
+au FileType markdown autocmd InsertEnter * inoremap <expr> <S-Tab> InList() ? "\<C-o>:BulletPromote\<cr>" : "\<S-Tab><Tab>"
+
+
+
+" delimitMate
+" au FileType markdown,pandoc,tex let b:delimitMate_quotes = "\" ' ` $"
+" au FileType markdown,pandoc,tex let b:delimitMate_smart_matchpairs = '^\%(\w\|\!\|[^[:space:][:punct:]]\)'
+" au FileType tex filetype indent off
+
+
+
+" indentLine
+let g:indentLine_setColors = 0
+let g:indentLine_setConceal = 0
+
+
+
+" syntastic
+" let g:syntastic_cpp_checkers =
+" let g:syntastic_check_on_wq = 0
+
+
+
+" tcomment_vim
+let g:tcomment_mapleader1 = '<c-t>'
+call tcomment#type#Define('cuda_block', g:tcomment#block2_fmt_c)
+call tcomment#type#Define('c_block', g:tcomment#block2_fmt_c)
+vmap gb :TCommentBlock<CR>
+
+
+
+" vim-markdown
+let g:vim_markdown_fenced_languages = [
+            \   'c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini',
+            \   '{graphviz}=dot', 'graphviz=dot', '\{graphviz\}=dot']
+let g:vim_markdown_conceal_code_blocks = 0
+let g:vim_markdown_math = 1
+let g:vim_markdown_folding_disabled = 1
+autocmd BufNewFile,BufRead *.md setlocal foldmethod=expr foldexpr=Foldexpr_markdown(v:lnum)
+
+
+
+" vim-pandoc
+" let g:pandoc#formatting#mode = 'h'
+
+
+
+" vim-you-autocorrect
+" autocmd FileType markdown,tex,text,mail EnableAutocorrect
+" Sometimes I want to spell incorrectly, so just use the nice macro to quickly
+" fix errors IF I want.
+" imap <C-u> <C-O><Plug>VimyouautocorrectUndo
+" imap <C-j> <C-O><Plug>VimyouautocorrectPrevious
+" imap <C-u> <C-O><Plug>VimyouautocorrectNext
+" this doesn't work with marks, see logic in above functions
+" imap <C-u> <Esc>mzb[s1z=`z:delm z<CR>a
+function! FixLast()
+    " get the character under the cursor (the last character typed)
+    let char = matchstr(getline('.'), '\%' . col('.') . 'c.')
+    " if char != ' '
+    "     exe "normal b"
+    " endif
+    exe "normal [s1z="
+endfunction
+nmap <C-u> <Esc>:call FixLast()<CR>
+imap <C-u> <Esc>:call FixLast()<CR>A
+
+
+
+" YouCompleteMe
+let g:ycm_show_diagnostics_ui = 0
+let g:ycm_confirm_extra_conf = 0
+" make menu easier to read
+highlight Pmenu ctermfg=17
+
+
+
+
+
+let path = expand('%:p')
+
+function! Browser()
+    let line = getline(".")
+    let line = matchstr(line, '\(https\?://\|www\.\)[^ ,;\t>]*')
+    if line == ''
+        return 1
+    endif
+    exec "silent !qutebrowser '".line."' &>/dev/null &"
+endfunction
+map <C-o> :call Browser()<CR>
