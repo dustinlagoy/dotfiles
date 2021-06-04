@@ -102,12 +102,10 @@ setup_ssh_session() {
 
 start_or_connect_to_ssh_agent() {
     if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-        echo "starting ssh agent"
         ssh-agent > ~/.ssh-agent-thing
         eval "$(<~/.ssh-agent-thing)" > /dev/null
     fi
     if [[ "$SSH_AGENT_PID" == "" ]]; then
-        echo "connecting to ssh agent"
         eval "$(<~/.ssh-agent-thing)" > /dev/null
     fi
 }
