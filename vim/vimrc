@@ -39,6 +39,7 @@ nnoremap N Nzz
 
 hi clear SpellBad
 hi SpellBad cterm=underline,bold
+set spellcapcheck=
 set thesaurus +=/home/dustin/.vim/mthesaur.txt
 
 set history=5000
