@@ -18,3 +18,5 @@
     ff = only
 [color]
     ui = auto
+[init]
+    defaultBranch = main
