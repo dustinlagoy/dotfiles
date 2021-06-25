@@ -124,6 +124,7 @@ let g:ycm_confirm_extra_conf = 0
 " make menu easier to read
 highlight Pmenu ctermfg=17
 map <C-g> :YcmCompleter GoTo<CR>
+set updatetime=500
 
 
 
