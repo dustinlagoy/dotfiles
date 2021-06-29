@@ -101,7 +101,7 @@ autocmd FileType tex set fo=racql | set spell
 autocmd FileType mail set syntax=markdown
 autocmd FileType text,mail,markdown set fo= | set spell | exe SoftWrapText()
 autocmd FileType markdown set concealcursor=
-autocmd FileType c,cpp set tabstop=2 | set shiftwidth=2
+autocmd FileType c,cpp set tabstop=2 | set softtabstop=2 | set shiftwidth=2
 autocmd FileType gitcommit set fo-=a | set nofoldenable
 autocmd Bufenter .vimprofile set ft=vim
 autocmd FileType cython set commentstring=#%s
