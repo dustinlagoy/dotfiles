@@ -100,8 +100,8 @@ autocmd Bufenter stdin set nonumber
 autocmd FileType tex set fo=racql | set spell
 autocmd FileType mail set syntax=markdown
 autocmd FileType text,mail,markdown set fo= | set spell | exe SoftWrapText()
-autocmd FileType markdown set tabstop=4 | set shiftwidth=4 | set concealcursor=
-autocmd FileType c,cpp,fortran | set tabstop=4 | set shiftwidth=4
+autocmd FileType markdown set concealcursor=
+autocmd FileType c,cpp set tabstop=2 | set shiftwidth=2
 autocmd FileType gitcommit set fo-=a | set nofoldenable
 autocmd Bufenter .vimprofile set ft=vim
 autocmd FileType cython set commentstring=#%s
