@@ -2,8 +2,14 @@ source $HOME/.vimprofile
 
 """OPTIONS"""
 
+set backspace=indent,eol,start
 syntax on
 set clipboard=unnamedplus
+func UpdateViminfo(timer)
+    rviminfo
+    wviminfo
+endfunc
+let timer = timer_start(1000, 'UpdateViminfo', {'repeat': -1})
 set mouse=a
 set autoindent
 set ruler
