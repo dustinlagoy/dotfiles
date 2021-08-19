@@ -5,11 +5,12 @@ source $HOME/.vimprofile
 set backspace=indent,eol,start
 syntax on
 set clipboard=unnamedplus
-func UpdateViminfo(timer)
-    rviminfo
-    wviminfo
-endfunc
-let timer = timer_start(1000, 'UpdateViminfo', {'repeat': -1})
+set viminfo='20,<5000,s5000
+augroup viminfo
+    autocmd!
+    autocmd TextYankPost * wviminfo
+    autocmd CursorHold,FocusGained,FocusLost * rviminfo
+augroup END
 set mouse=a
 set autoindent
 set ruler
