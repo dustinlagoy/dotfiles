@@ -123,7 +123,8 @@ let g:ycm_show_diagnostics_ui = 0
 let g:ycm_confirm_extra_conf = 0
 " make menu easier to read
 highlight Pmenu ctermfg=17
-map <C-g> :YcmCompleter GoTo<CR>
+map <C-g> :tab YcmCompleter GoTo<CR>
+let g:ycm_goto_buffer_command = 'split-or-existing-window'
 set updatetime=500
 
 
