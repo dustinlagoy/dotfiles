@@ -66,6 +66,10 @@ nnoremap <Space> za
 set shortmess=a
 set cmdheight=2
 
+" better tab completion
+set wildmode=longest:list,list,full
+set wildmenu
+
 " highlight bad whitespace
 highlight ExtraWhitespace ctermbg=darkgreen guibg=lightgreen
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
