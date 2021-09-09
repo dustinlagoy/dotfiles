@@ -179,7 +179,7 @@
   #################################[ os_icon: os identifier ]##################################
   # OS identifier color.
   typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=232
-  (( host_color=$(cksum <<< $HOST | cut -f1 -d' ') % 255 ))
+  host_color=$(RANDOM=$(cksum <<< $HOST | cut -f1 -d' '); echo $(($RANDOM%255)))
   typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND=$host_color
   # Custom icon.
   # typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='⭐'
