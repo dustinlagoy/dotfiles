@@ -89,12 +89,14 @@ noremap K <c-d>
 noremap J <c-u>
 " J used to 'join' lines, use M instead to 'merge' them
 noremap M J
-
 " automatically wrap paramter lists in code
 let mapleader=","
 map <Leader>a <Leader>r<Leader>s
 map <Leader>r 0/(<Enter>a<Enter><Esc>:noh<Enter><Esc>
 map <Leader>s 079l/,<Enter>Nlxi<Enter><Esc>:noh<Enter><Esc>
+" tabs
+map t :tabnext<CR>
+map T :tabprevious<CR>
 
 
 
