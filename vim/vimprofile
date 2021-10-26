@@ -121,6 +121,7 @@ imap <C-u> <Esc>:call FixLast()<CR>A
 " YouCompleteMe
 let g:ycm_show_diagnostics_ui = 0
 let g:ycm_confirm_extra_conf = 0
+let g:ycm_autoclose_preview_window_after_insertion = 1
 " make menu easier to read
 highlight Pmenu ctermfg=17
 map <C-g> :tab YcmCompleter GoTo<CR>
