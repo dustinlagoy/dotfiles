@@ -63,6 +63,8 @@ set showbreak=\ \
 
 " folding
 set foldmethod=syntax
+set foldnestmax=1
+set nofoldenable
 nnoremap <Space> za
 
 " fix status line
