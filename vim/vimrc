@@ -4,7 +4,10 @@ source $HOME/.vimprofile
 
 set backspace=indent,eol,start
 syntax on
-set clipboard=unnamedplus
+" set clipboard=unnamedplus
+vnoremap <silent>Y "yy <Bar> :call system('xclip', @y)<CR>
+nnoremap <silent>Yy "yyy <Bar> :call system('xclip', @y)<CR>
+nnoremap <silent>P :r !xclip -o -sel clip<CR>
 set viminfo='20,<5000,s5000
 augroup viminfo
     autocmd!
