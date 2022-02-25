@@ -1,3 +1,107 @@
+run_zsh_setup() {
+    # Run ssh agent if not in an ssh session
+    if currently_in_ssh_tty; then
+        setup_ssh_session
+        if test -z $ZSH_EXECUTION_STRING; then
+            launch_multiplexer
+        fi
+    else
+        start_or_connect_to_ssh_agent
+    fi
+}
+
+currently_in_ssh_tty() {
+    test -n "$SSH_TTY"
+}
+
+currently_in_ssh_session() {
+    if currently_in_ssh_tty; then
+        return 0
+    elif test -n "$TMUX_PANE"; then
+        base_tty_of_tmux_session=$(tmux list-clients -t ${TMUX_PANE:1} -F '#{client_tty}')
+        if who | grep "${base_tty_of_tmux_session:5} " > /dev/null; then
+            return 0
+        fi
+    fi
+    return 1
+}
+
+have_ssh_agent() {
+    test -n "$SSH_AUTH_SOCK"
+}
+
+have_remote_ssh_agent() {
+    have_ssh_agent && test -z $SSH_AGENT_PID
+}
+
+setup_ssh_session() {
+    echo $DISPLAY > ~/.display.txt
+    if have_remote_ssh_agent
+    then
+        echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK; export SSH_AUTH_SOCK;" > ~/.ssh-agent-thing-remote
+        export WANTS_REMOTE_SSH_AGENT='true'
+    else
+        start_or_connect_to_ssh_agent
+    fi
+}
+
+start_or_connect_to_ssh_agent() {
+    if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+        ssh-agent > ~/.ssh-agent-thing
+        eval "$(<~/.ssh-agent-thing)" > /dev/null
+    fi
+    if [[ "$SSH_AGENT_PID" == "" ]]; then
+        eval "$(<~/.ssh-agent-thing)" > /dev/null
+    fi
+}
+
+launch_multiplexer() {
+    if which tmux >/dev/null 2>&1
+    then
+        launch_tmux
+    elif which screen >/dev/null 2>&1
+    then
+        launch_screen
+    fi
+}
+
+launch_tmux() {
+    # if not already inside a tmux session...
+    if test -z "$TMUX"; then
+        echo really launch
+        # attach to any unused sessions, or start a new session
+        # tmux ls
+        # echo "get session"
+        session=$(tmux ls | grep -v attached | head -1 | cut -f1 -d:)
+        if [[ $session == "" ]]; then
+            # echo "new $TERM"
+            tmux new-session
+        else
+            # echo "attach: $session"
+            tmux attach -t $session
+        fi
+   fi
+   # when quitting tmux, quit totally
+   while test -z ${TMUX}; do
+       exit
+   done
+}
+
+launch_screen() {
+    # if not already inside a screen session...
+    if test -z "$STY"; then
+        # attach to any unused sessions, or start a new session
+        screen -RR
+    fi
+    # when quitting screen, quit totally
+    while test -z ${STY}; do
+        exit
+    done
+}
+
+run_zsh_setup
+source /etc/profile
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -84,81 +188,3 @@ precmd() {
 }
 
 
-run_zsh_setup() {
-    # Run ssh agent if not in an ssh session
-    if currently_in_ssh_session; then
-        setup_ssh_session
-    else
-        start_or_connect_to_ssh_agent
-    fi
-}
-
-currently_in_ssh_session() {
-    test -n "$SSH_TTY"
-}
-
-have_ssh_agent() {
-    test -n "$SSH_AUTH_SOCK"
-}
-
-have_remote_ssh_agent() {
-    have_ssh_agent && test -z $SSH_AGENT_PID
-}
-
-setup_ssh_session() {
-    echo $DISPLAY > ~/.display.txt
-    if have_remote_ssh_agent
-    then
-        echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK; export SSH_AUTH_SOCK;" > ~/.ssh-agent-thing-remote
-        export WANTS_REMOTE_SSH_AGENT='true'
-    else
-        start_or_connect_to_ssh_agent
-    fi
-    launch_multiplexer
-}
-
-start_or_connect_to_ssh_agent() {
-    if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-        ssh-agent > ~/.ssh-agent-thing
-        eval "$(<~/.ssh-agent-thing)" > /dev/null
-    fi
-    if [[ "$SSH_AGENT_PID" == "" ]]; then
-        eval "$(<~/.ssh-agent-thing)" > /dev/null
-    fi
-}
-
-launch_multiplexer() {
-    if which tmux >/dev/null 2>&1
-    then
-        launch_tmux
-    elif which screen >/dev/null 2>&1
-    then
-        launch_screen
-    fi
-}
-
-launch_tmux() {
-   # if not already inside a tmux session...
-   if test -z "$TMUX"; then
-       # attach to any unused sessions, or start a new session
-       tmux attach -t $(tmux ls | grep -v attached | head -1 | cut -f1 -d:) || tmux new-session
-   fi
-   # when quitting tmux, quit totally
-   while test -z ${TMUX}; do
-       exit
-   done
-}
-
-launch_screen() {
-    # if not already inside a screen session...
-    if test -z "$STY"; then
-        # attach to any unused sessions, or start a new session
-        screen -RR
-    fi
-    # when quitting screen, quit totally
-    while test -z ${STY}; do
-        exit
-    done
-}
-
-run_zsh_setup
