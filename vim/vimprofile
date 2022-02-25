@@ -7,7 +7,7 @@ endif
 call plug#begin('~/.vim/plugged')
     Plug 'w0rp/ale'
     Plug 'dkarter/bullets.vim'
-    Plug 'chrisbra/csv.vim'
+    Plug 'mechatroner/rainbow_csv'
     " Plug 'Raimondi/delimitMate'
     Plug 'fidian/hexmode'
     Plug 'Yggdroot/indentLine'
