@@ -12,11 +12,11 @@
   sps (tap-hold-next-release 150 spc lsft)
   jn (layer-toggle justnums)
   num (layer-toggle numbers)
-  ;;cd  (layer-toggle code)
+  cd  (layer-toggle code)
   ;;cd  (tap-macro (cmd-button "notify-send 'layer code'") (layer-toggle code))
   ;;cd  (cmd-button "notify-send 'layer code'")
   ;; cd  (tap-macro (cmd-button "notify-send 'layer code\n'") (layer-toggle code))
-  cd  (tap-macro (cmd-button "notify-send layout-code \"$(cat code.txt)\"") (layer-toggle code))
+  ;;cd  (tap-macro (cmd-button "notify-send layout-code \"$(cat code.txt)\"") (layer-toggle code))
   ;;` * \\ & + @ { } $ ?\n' " - \_ = # \( \) : ;\n^ | < > ! ~ [ ] %
   cde (tap-hold-next-release 150 esc @cd)
   cdt (tap-hold-next-release 150 t @cd)
