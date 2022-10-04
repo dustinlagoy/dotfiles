@@ -171,6 +171,50 @@ alias vi='vim'
 alias rm='rm -i'
 alias grep='grep --color'
 
+spin() {
+    set +o monitor
+    cmd=$1
+    spin='⠋⠙⠚⠞⠖⠦⠴⠲⠳⠓'
+    #spin='/-\|'
+    i=0
+    eval $cmd >/dev/null &
+    pid=$!
+    while kill -0 $pid &>/dev/null; do
+        i=$(((i + 1) % 10))
+        printf "$fg[magenta]\r${spin:$i:1}"
+        printf "$fg[white] $2"
+        sleep .1
+    done
+    wait $pid
+    code=$?
+    if [[ $code == 0 ]] then
+        mark="$fg[green]✓"
+    else
+        mark="$fg[red]✗"
+    fi
+    printf "\r$mark\n$fg[white]"
+    return $code
+}
+
+dbuild() {
+    name=$(basename $PWD)
+    build_cmd="podman build --secret id=git_credentials,src=/home/lagoyd/cred -t $name ."
+    if [[ $1 == "-v" ]] then
+        eval $build_cmd
+        shift
+    elif [[ $1 == "-q" ]] then
+        eval $build_cmd >/dev/null
+        shift
+    else
+        spin $build_cmd "building container $name"
+    fi
+}
+
+drun() {
+    name=$(basename $PWD)
+    podman run --rm -it -v $PWD:/usr/local/src/$name -w /usr/local/src/$name $name $@
+}
+
 history(){
     command sed 's/^. [0-9]*...//' < $HOME/.histfile | grep -i --color "$@"
 }

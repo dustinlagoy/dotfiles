@@ -24,7 +24,8 @@ set shiftwidth=4
 set expandtab
 
 set textwidth=79
-set colorcolumn=80
+hi LineTooLong cterm=italic,bold
+match LineTooLong /\%>80v.\+/
 
 set formatoptions=rcql
 set nojoinspaces
@@ -62,7 +63,7 @@ set breakindent
 set showbreak=\ \ 
 
 " folding
-set foldmethod=syntax
+set foldmethod=manual
 set foldnestmax=1
 set nofoldenable
 nnoremap <Space> za
@@ -110,7 +111,7 @@ map T :tabprevious<CR>
 function SoftWrapText()
     set wrap
     set linebreak
-    set colorcolumn=
+    hi clear LineTooLong
     " autocmd VimEnter * if &diff | windo set wrap | endif
     autocmd VimResized,BufEnter,BufWritePost * if !&diff && (&columns > softwrap) | let &columns=softwrap | endif
 endfunction
@@ -121,9 +122,9 @@ function Spreadsheet()
     set tabstop=1
     set list
     set listchars=tab:\|\|
-    set colorcolumn=
-    autocmd BufEnter,InsertLeave,TextChanged * silent! RainbowAlign
-    autocmd BufWritePre * RainbowShrink
+    hi clear LineTooLong
+    " autocmd BufEnter,InsertLeave,TextChanged * silent! RainbowAlign
+    " autocmd BufWritePre * RainbowShrink
 endfunction
 
 autocmd Bufenter stdin set nonumber

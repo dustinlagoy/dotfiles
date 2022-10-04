@@ -1,12 +1,13 @@
 [user]
     name = Dustin Lagoy
-    email = dustin@lagoy.org
+	email = dustin.lagoy@nrc-cnrc.gc.ca
 [log]
     date = short
 [format]
     pretty = "%C(yellow) %h%Creset%C(red)%d%Creset %Cgreen%cd%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset"
 [alias]
     l = log --branches --remotes --tags --graph --notes HEAD -n 20
+    d = difftool
 [core]
     autocrlf = false
     safecrlf = true
@@ -20,3 +21,11 @@
     ui = auto
 [init]
     defaultBranch = main
+[credential]
+	helper = cache --timeout=600
+[diff]
+    tool = icdiff
+[difftool]
+    prompt = false
+[difftool "icdiff"]
+    cmd = /usr/bin/icdiff --truncate --line-numbers $LOCAL $REMOTE

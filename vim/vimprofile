@@ -35,7 +35,7 @@ let g:ale_cpp_clangtidy_checks = ['*', '-cppcoreguidelines-pro-bounds-pointer-ar
 " \}
 let g:ale_python_pylint_options = '--extension-pkg-whitelist=PyQt5'
 let g:ale_python_flake8_change_directory = 0
-
+let g:ale_python_auto_poetry = 1
 
 
 " bullets
