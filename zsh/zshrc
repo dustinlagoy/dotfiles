@@ -197,6 +197,18 @@ spin() {
 }
 
 dbuild() {
+    export DOCKER_BUILDKIT=1
+    read -s "pw?password: "; export cred="protocol=https
+host=gitlab.drao.nrc.ca
+username=lagoyd
+password=$pw"
+    build_cmd="docker build --secret id=git_credentials,env=cred $@"
+    eval $build_cmd
+    unset cred
+}
+
+
+pbuild() {
     name=$(basename $PWD)
     build_cmd="podman build --secret id=git_credentials,src=/home/lagoyd/cred -t $name ."
     if [[ $1 == "-v" ]] then
@@ -210,7 +222,7 @@ dbuild() {
     fi
 }
 
-drun() {
+prun() {
     name=$(basename $PWD)
     podman run --rm -it -v $PWD:/usr/local/src/$name -w /usr/local/src/$name $name $@
 }
