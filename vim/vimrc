@@ -2,6 +2,7 @@ source $HOME/.vimprofile
 
 """OPTIONS"""
 
+set directory=$HOME/.vim//
 set backspace=indent,eol,start
 syntax on
 " set clipboard=unnamedplus
@@ -66,7 +67,7 @@ set showbreak=\ \
 set foldmethod=manual
 set foldnestmax=1
 set nofoldenable
-nnoremap <Space> za
+" nnoremap <Space> za
 
 " fix status line
 set shortmess=a
@@ -99,7 +100,7 @@ noremap M J
 let mapleader=","
 map <Leader>a <Leader>r<Leader>s
 map <Leader>r 0/(<Enter>a<Enter><Esc>:noh<Enter><Esc>
-map <Leader>s 079l/,<Enter>Nlxi<Enter><Esc>:noh<Enter><Esc>
+map <Leader>s 0ywq:is/, /,\r<Esc>pa/g<Esc><Enter>:noh<Enter>A<Left><Enter><Backspace><Esc>
 " tabs
 map t :tabnext<CR>
 map T :tabprevious<CR>
@@ -133,6 +134,7 @@ autocmd FileType mail set syntax=markdown
 autocmd FileType text,mail,markdown set fo= | set spell | exe SoftWrapText()
 autocmd FileType markdown set concealcursor=
 autocmd FileType c,cpp set tabstop=2 | set softtabstop=2 | set shiftwidth=2
+autocmd FileType c,cpp set comments-=:// | set comments+=:/// | set comments +=://
 autocmd FileType csv,tsv exe Spreadsheet()
 autocmd FileType gitcommit set fo-=a | set nofoldenable
 autocmd Bufenter .vimprofile set ft=vim
