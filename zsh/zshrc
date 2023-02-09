@@ -196,17 +196,31 @@ spin() {
     return $code
 }
 
+gcred() {
+    read -s "pw?password: "; export cred="protocol=https
+host=gitlab.drao.nrc.ca
+username=lagoyd
+password=$pw"
+    echo $cred | git credential approve
+    unset cred
+}
+
 dbuild() {
     export DOCKER_BUILDKIT=1
     read -s "pw?password: "; export cred="protocol=https
 host=gitlab.drao.nrc.ca
 username=lagoyd
 password=$pw"
-    build_cmd="docker build --secret id=git_credentials,env=cred $@"
+    name=$(basename $PWD)
+    build_cmd="docker build --secret id=git_credentials,env=cred -t $name $@"
     eval $build_cmd
     unset cred
 }
 
+drun() {
+    name=$(basename $PWD)
+    docker run --rm -it -v $PWD:/src -w /src $name $@
+}
 
 pbuild() {
     name=$(basename $PWD)
