@@ -155,8 +155,6 @@ autoload -U colors && colors
 # Vim-like bindings
 bindkey "^R" history-incremental-search-backward
 bindkey -a "/" history-incremental-search-backward
-bindkey -a "k" vi-down-line-or-history
-bindkey -a "j" up-line-or-history
 bindkey -v "^[[8~" end-of-line
 bindkey -a "^[[8~" vi-end-of-line
 bindkey -v "^[[7~" beginning-of-line

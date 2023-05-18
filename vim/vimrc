@@ -87,13 +87,13 @@ autocmd Syntax * syn match ExtraWhitespace /\s\+$\|\t\+/ containedin=ALL
 """MAPS"""
 
 " colemak swap j/k for navigation
-noremap j gk
-noremap k gj
-onoremap <silent> j gk
-onoremap <silent> k gj
+noremap k gk
+noremap j gj
+onoremap <silent> k gk
+onoremap <silent> j gj
 " use K,J to skip half screenfulls
-noremap K <c-d>
-noremap J <c-u>
+noremap K <c-u>
+noremap J <c-d>
 " J used to 'join' lines, use M instead to 'merge' them
 noremap M J
 " automatically wrap paramter lists in code
