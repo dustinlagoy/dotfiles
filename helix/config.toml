@@ -1,0 +1,16 @@
+theme = "base16"
+
+[editor]
+bufferline = "multiple"
+# [editor.whitespace]
+# render = "all"
+[editor.soft-wrap]
+enable = true
+
+[keys.normal]
+K = "half_page_up"
+J = "half_page_down"
+
+[keys.select]
+K = "half_page_up"
+J = "half_page_down"

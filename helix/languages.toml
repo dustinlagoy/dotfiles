@@ -1,0 +1,30 @@
+use-grammars = { only = [
+  "awk", "bash", "regex",
+  "cmake", "cpp", "c", "make",
+  "diff", "gitattributes", "git-commit", "git-config", "gitignore", "git-rebase",
+  "dockerfile",
+  "hosts", "passwd",
+  "json", "toml", "xml", "yaml",
+  "markdown", "mermaid",
+  "python",
+  "rust",
+]}
+[language-server.ltex-lsp]
+command = "ltex-ls"
+
+[[language]]
+name = "markdown"
+language-servers = ["ltex-lsp", "marksman"]
+
+[language-server.pylsp]
+[language-server.pylsp.config]
+pylsp.plugins.pycodestyle.enabled = false
+# pylsp.plugins.pycodestyle.maxLineLength = 88
+pylsp.plugins.black.enabled = true
+pylsp.plugins.flake8.enabled = true
+
+
+[[language]]
+name = "python"
+auto-format = true
+formatter = { command = "bash", args = ["-c", "isort - | black -"] }

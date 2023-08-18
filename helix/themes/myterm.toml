@@ -1,0 +1,72 @@
+# Scheme name: Material
+# Scheme author: Nate Peterson
+# Template author: Tinted Theming (https://github.com/tinted-theming)
+"attributes" = "light-yellow"
+"comment" = { fg = "gray" }
+"constant" = { fg = "light-yellow" }
+"constant.character.escape" = { fg = "cyan" }
+"function" = { fg = "blue" }
+"keyword" = { fg = "magenta" }
+"operator" = { fg = "white" }
+"punctuation" = { fg = "white" }
+"string" = { fg = "green" }
+# "string.regexp" = { fg = "red" }
+# "tag" = { fg = "pink" }
+"type" = { fg = "yellow" }
+# "type.enum.variant" = { fg = "foreground", modifiers = ["italic"] }
+"variable" = { fg = "white" }
+# "variable.builtin" = { fg = "magenta", modifiers = ["italic"] }
+# "variable.parameter" = { fg ="light-red" }
+# # "variable.other.member" = { fg ="green" }
+# "variable.other.member" = { fg = "red", modifiers = ["italic"] }
+
+"diff.plus" = { fg = "green" }
+"diff.delta" = { fg = "light-yellow" }
+"diff.minus" = { fg = "red" }
+
+"ui.background" = { fg = "white", bg = "black" }
+"ui.bufferline" = { fg = "light-gray", bg = "black" }
+"ui.bufferline.active" = { fg = "white", bg = "gray", modifiers = ["bold"] }
+"ui.cursor" =  { fg = "white", modifiers = ["reversed"] }
+"ui.cursor.match" = { fg = "yellow", modifiers = ["underlined"] }
+"ui.cursor.primary" = { fg = "white", modifiers = ["reversed"] }
+# "ui.cursorline.primary" = { bg = "background_dark" }
+"ui.help" = { fg = "light-gray", bg = "gray" }
+# "ui.debug" = { fg = "red" }
+# "ui.highlight.frameline" = { fg = "black", bg = "red" }
+"ui.linenr" = { fg = "gray" }
+"ui.linenr.selected" = { fg = "light-gray", bg = "gray", modifiers = ["bold"]}
+"ui.menu" = { fg = "white", bg = "gray" }
+"ui.menu.selected" = { fg = "gray", bg = "light-gray" }
+"ui.popup" = { fg = "gray" }
+"ui.selection" = { bg = "gray" }
+# "ui.selection.primary" = { bg = "primary_highlight" }
+"ui.statusline" = { fg = "light-gray", bg = "gray" }
+# "ui.statusline.inactive" = { fg = "comment", bg = "background_dark" }
+"ui.statusline.normal" = { fg = "black", bg = "light-gray" }
+"ui.statusline.insert" = { fg = "black", bg = "green" }
+"ui.statusline.select" = { fg = "black", bg = "red" }
+"ui.text" = { fg = "white" }
+"ui.text.focus" = { fg = "white" }
+"ui.virtual.ruler" = { bg = "gray" }
+"ui.virtual.whitespace" = { fg = "light-gray" }
+# "ui.virtual.wrap" = { fg = "subtle" }
+"ui.window" = { fg = "gray" }
+
+"error" = { fg = "red", bg = "gray"}
+"warning" = { fg = "yellow", bg = "gray"}
+"info" = { bg = "gray"}
+"hint" = { bg = "gray"}
+
+"markup.heading" = { fg = "blue", modifiers = ["bold"] }
+"markup.list" = "red"
+"markup.bold" = { fg = "yellow", modifiers = ["bold"] }
+"markup.italic" = { fg = "magenta", modifiers = ["italic"] }
+"markup.strikethrough" = { modifiers = ["crossed_out"] }
+"markup.link.url" = { fg = "light-yellow", modifiers = ["underlined"] }
+"markup.link.text" = "red"
+"markup.quote" = { fg = "cyan", modifiers = ["italic"] }
+"markup.raw" = { fg = "green" }
+
+"diagnostic".underline = { color = "light-yellow", style = "curl" }
+"diagnostic.error".underline = { color = "red", style = "curl" }
