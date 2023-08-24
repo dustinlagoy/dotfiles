@@ -2,6 +2,7 @@ theme = "base16"
 
 [editor]
 bufferline = "multiple"
+idle-timeout = 0
 # [editor.whitespace]
 # render = "all"
 [editor.soft-wrap]
