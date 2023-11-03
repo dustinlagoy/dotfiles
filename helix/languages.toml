@@ -8,6 +8,7 @@ use-grammars = { only = [
   "markdown", "mermaid",
   "python",
   "rust",
+  "typst"
 ]}
 [language-server.ltex-lsp]
 command = "ltex-ls"
@@ -15,6 +16,8 @@ command = "ltex-ls"
 [[language]]
 name = "markdown"
 language-servers = ["ltex-lsp", "marksman"]
+auto-format = true
+formatter = { command = "npx", args = ["prettier", "--parser", "markdown"]}
 
 [language-server.pylsp]
 [language-server.pylsp.config]
@@ -28,3 +31,32 @@ pylsp.plugins.flake8.enabled = true
 name = "python"
 auto-format = true
 formatter = { command = "bash", args = ["-c", "isort - | black -"] }
+
+
+[language-server.typst-lsp]
+command = "typst-lsp"
+
+[[language]]
+name = "typst"
+scope = "source.typst"
+injection-regex = "^typ(st)?$"
+roots = ["typst.toml"]
+comment-token = "//"
+file-types = ["typ"]
+indent = { tab-width = 2, unit = " " }
+language-servers = ["typst-lsp"]
+text-width = 100
+rulers = [100]
+soft-wrap.wrap-at-text-width = true
+
+[language.auto-pairs]
+'(' = ')'
+'{' = '}'
+'[' = ']'
+'"' = '"'
+'`' = '`'
+'$' = '$'
+
+[[grammar]]
+name = "typst"
+source = { path = "/home/lagoyd/src/uben0-tree-sitter-typst" }

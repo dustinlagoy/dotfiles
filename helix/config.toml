@@ -11,6 +11,7 @@ enable = true
 [keys.normal]
 K = "half_page_up"
 J = "half_page_down"
+"," = ["goto_prev_diag", "code_action"]
 
 [keys.select]
 K = "half_page_up"

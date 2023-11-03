@@ -23,7 +23,11 @@ call plug#begin('~/.vim/plugged')
     " Plug 'vim-pandoc/vim-pandoc' | Plug 'vim-pandoc/vim-pandoc-syntax'
     Plug 'dhruvasagar/vim-table-mode'
     Plug 'sedm0784/vim-you-autocorrect'
-    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --system-libclang' }
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --rust-completer --clang-completer --system-libclang' }
+    Plug 'glench/vim-jinja2-syntax'
+    Plug 'kaarmu/typst.vim'
+    Plug 'noahfrederick/vim-noctu'
+    Plug 'dracula/vim'
 call plug#end()
 
 
@@ -39,7 +43,7 @@ let g:ale_python_auto_poetry = 1
 
 
 " bullets
-let g:bullets_outline_levels = ['num', 'abc', 'std*']
+let g:bullets_outline_levels = ['num', 'num', 'num']
 function InList()
     let line=getline('.')
     if line =~ '^ *\([*+]\|[a-z]\+\.\|[0-9]\+\.\)'
@@ -127,6 +131,11 @@ highlight Pmenu ctermfg=17
 map <C-g> :tab YcmCompleter GoTo<CR>
 let g:ycm_goto_buffer_command = 'split-or-existing-window'
 set updatetime=500
+" Let clangd fully control code completion
+let g:ycm_clangd_uses_ycmd_caching = 0
+" Use installed clangd, not YCM-bundled clangd which doesn't get updates.
+let g:ycm_clangd_binary_path = exepath("clangd")
+let g:ycm_clangd_args = ['-log=verbose', '-pretty']
 
 
 

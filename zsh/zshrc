@@ -159,13 +159,30 @@ bindkey -v "^[[8~" end-of-line
 bindkey -a "^[[8~" vi-end-of-line
 bindkey -v "^[[7~" beginning-of-line
 bindkey -a "^[[7~" vi-beginning-of-line
+# helix-like
+bindkey -a "d" vi-delete-char
+bindkey -a "x" visual-line-mode
+bindkey -M visual "d" vi-delete
+command-forward-word() { zle visual-mode; zle vi-forward-word; zle vi-backward-char}
+visual-forward-word() { zle visual-mode; zle vi-forward-char; command-forward-word}
+command-back-word() { zle visual-mode; zle vi-backward-word}
+visual-back-word() { zle visual-mode; zle vi-backward-char; command-back-word}
+zle -N command-forward-word
+zle -N visual-forward-word
+zle -N command-back-word
+zle -N visual-back-word
+bindkey -a "w" command-forward-word
+bindkey -M visual "w" visual-forward-word
+bindkey -a "b" command-back-word
+bindkey -M visual "b" visual-back-word
+
 
 export EDITOR="vim"
 
 alias :q="exit"
 alias ls='ls --color'
 alias ll='ls --color -lah'
-alias vi='vim'
+# alias vi='vim'
 alias rm='rm -i'
 alias grep='grep --color'
 
@@ -236,7 +253,7 @@ pbuild() {
 
 prun() {
     name=$(basename $PWD)
-    podman run --rm -it -v $PWD:/usr/local/src/$name -w /usr/local/src/$name $name $@
+    podman run --rm -it -v $PWD:/src/$name -w /src/$name $name $@
 }
 
 history(){

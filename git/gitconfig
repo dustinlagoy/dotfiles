@@ -6,7 +6,7 @@
 [format]
     pretty = "%C(yellow) %h%Creset%C(red)%d%Creset %Cgreen%cd%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset"
 [alias]
-    l = log --branches --remotes --tags --graph --notes HEAD -n 20
+    l = log --branches --remotes --tags --graph --notes HEAD -n 17
     d = difftool
 [core]
     autocrlf = false
@@ -29,3 +29,5 @@
     prompt = false
 [difftool "icdiff"]
     cmd = /usr/bin/icdiff --truncate --line-numbers $LOCAL $REMOTE
+[push]
+	followTags = true

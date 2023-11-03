@@ -5,10 +5,11 @@ source $HOME/.vimprofile
 set directory=$HOME/.vim//
 set backspace=indent,eol,start
 syntax on
+filetype plugin indent on
 " set clipboard=unnamedplus
-vnoremap <silent>Y "yy <Bar> :call system('xclip', @y)<CR>
-nnoremap <silent>Yy "yyy <Bar> :call system('xclip', @y)<CR>
-nnoremap <silent>P :r !xclip -o -sel clip<CR>
+vnoremap <silent>Y "yy <Bar> :call system('wl-copy', @y)<CR>
+nnoremap <silent>Yy "yyy <Bar> :call system('wl-copy', @y)<CR>
+nnoremap <silent>P :r !wl-paste<CR>
 set viminfo='20,<5000,s5000
 augroup viminfo
     autocmd!
@@ -16,17 +17,19 @@ augroup viminfo
     autocmd CursorHold,FocusGained,FocusLost * rviminfo
 augroup END
 set mouse=a
-set autoindent
 set ruler
 
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+setlocal tabstop=4
+set softtabstop=0
+set shiftwidth=0
 set expandtab
+set autoindent
+set cinoptions+=(1s
+" set cinoptions=s,e0,n0,f0,{0,}0,^0,L-1,:s,=s,l0,b0,gs,hs,N0,E0,ps,ts,is,+s,c3,C0,/0,(1s,us,U0,w0,W0,k0,m0,j0,J0,)20,*70,#0,P0
 
-set textwidth=79
+set textwidth=80
 hi LineTooLong cterm=italic,bold
-match LineTooLong /\%>80v.\+/
+match LineTooLong /\%>81v.\+/
 
 set formatoptions=rcql
 set nojoinspaces
@@ -86,6 +89,16 @@ autocmd Syntax * syn match ExtraWhitespace /\s\+$\|\t\+/ containedin=ALL
 
 """MAPS"""
 
+" like helix
+noremap x V
+noremap d x
+vnoremap x j
+noremap w vw<Left>
+noremap b vb
+vnoremap w <Esc><Right>vw<Left>
+vnoremap b <Esc><Left>vb
+vnoremap i <Esc>`<i
+vnoremap a <Esc>`>a
 " colemak swap j/k for navigation
 noremap k gk
 noremap j gj
@@ -99,8 +112,9 @@ noremap M J
 " automatically wrap paramter lists in code
 let mapleader=","
 map <Leader>a <Leader>r<Leader>s
-map <Leader>r 0/(<Enter>a<Enter><Esc>:noh<Enter><Esc>
-map <Leader>s 0ywq:is/, /,\r<Esc>pa/g<Esc><Enter>:noh<Enter>A<Left><Enter><Backspace><Esc>
+map <Leader>r 0/[({\[]<Enter>a<Enter><Esc>:noh<Enter><Esc>
+map <Leader>s 0ywq:is/, /,\r<Esc>pa/g<Esc><Enter>:noh<Enter>$/[)}\]]<Enter>Ni,<Enter><Backspace><Esc>:noh<Enter>
+map <Leader>f {<Down>V}b:!black -q -<Enter>
 " tabs
 map t :tabnext<CR>
 map T :tabprevious<CR>
@@ -118,27 +132,27 @@ function SoftWrapText()
 endfunction
 
 function Spreadsheet()
-    set nowrap
+    setlocal nowrap
     hi clear ExtraWhitespace
-    set tabstop=1
-    set list
-    set listchars=tab:\|\|
+    setlocal tabstop=1
+    setlocal list
+    setlocal listchars=tab:\|\|
     hi clear LineTooLong
     " autocmd BufEnter,InsertLeave,TextChanged * silent! RainbowAlign
     " autocmd BufWritePre * RainbowShrink
 endfunction
 
-autocmd Bufenter stdin set nonumber
-autocmd FileType tex set fo=racql | set spell
-autocmd FileType mail set syntax=markdown
-autocmd FileType text,mail,markdown set fo= | set spell | exe SoftWrapText()
-autocmd FileType markdown set concealcursor=
-autocmd FileType c,cpp set tabstop=2 | set softtabstop=2 | set shiftwidth=2
-autocmd FileType c,cpp set comments-=:// | set comments+=:/// | set comments +=://
+autocmd Bufenter stdin setlocal nonumber
+autocmd FileType tex setlocal fo=racql spell
+autocmd FileType mail setlocal syntax=markdown
+autocmd FileType text,mail,markdown setlocal fo= spell | exe SoftWrapText()
+autocmd FileType markdown setlocal concealcursor=
+autocmd FileType c,cpp,h,hpp setlocal tabstop=2
+autocmd FileType c,cpp,h,hpp setlocal comments-=:// comments+=:/// comments +=://
 autocmd FileType csv,tsv exe Spreadsheet()
-autocmd FileType gitcommit set fo-=a | set nofoldenable
-autocmd Bufenter .vimprofile set ft=vim
-autocmd FileType cython set commentstring=#%s
+autocmd FileType gitcommit setlocal fo-=a nofoldenable
+autocmd Bufenter .vimprofile setlocal ft=vim
+autocmd FileType cython setlocal commentstring=#%s
 " python
 let g:pyindent_open_paren = '&sw'
 let g:pyindent_nested_paren = '&sw'
@@ -148,3 +162,5 @@ autocmd BufWritePost *md silent !~/bin/pancomp.sh % 2>/dev/null &
 com Panc execute 'silent !pancomp.sh % &' | redraw!
 autocmd BufWritePost *tex silent !~/bin/tex2pdf.sh % 2>&1 1>/dev/null &
 com Texc !tex2pdf.sh %
+
+" colorscheme base16
