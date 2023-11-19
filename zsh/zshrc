@@ -35,7 +35,10 @@ have_remote_ssh_agent() {
 }
 
 setup_ssh_session() {
-    echo $DISPLAY > ~/.display.txt
+    if test -n "$DISPLAY"
+    then
+        echo $DISPLAY > ~/.display.txt
+    fi
     if have_remote_ssh_agent
     then
         echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK; export SSH_AUTH_SOCK;" > ~/.ssh-agent-thing-remote
@@ -264,7 +267,10 @@ alias hist='history'
 precmd() {
     if currently_in_ssh_session
     then
-        export DISPLAY=$(cat ~/.display.txt)
+        if test -s ~/.display.txt
+        then
+            export DISPLAY=$(cat ~/.display.txt)
+        fi
         if [[ $WANTS_REMOTE_SSH_AGENT == 'true' ]]
         then
             eval "$(<~/.ssh-agent-thing-remote)" > /dev/null
