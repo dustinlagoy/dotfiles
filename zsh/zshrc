@@ -31,7 +31,7 @@ have_ssh_agent() {
 }
 
 have_remote_ssh_agent() {
-    have_ssh_agent && test -z $SSH_AGENT_PID
+    have_ssh_agent && currently_in_ssh_tty
 }
 
 setup_ssh_session() {
@@ -166,18 +166,41 @@ bindkey -a "^[[7~" vi-beginning-of-line
 bindkey -a "d" vi-delete-char
 bindkey -a "x" visual-line-mode
 bindkey -M visual "d" vi-delete
-command-forward-word() { zle visual-mode; zle vi-forward-word; zle vi-backward-char}
+# todo: try using `bindkey -N move visual` to create a new "move" keymap to be distinct from the normal visual map
+command-forward-word() {
+    zle visual-mode
+    zle -U s
+    zle vi-set-mark
+    zle vi-forward-word
+    zle vi-backward-char
+    zle -U e
+    zle vi-set-mark
+}
+command-back-word() {
+    zle visual-mode
+    zle -U e
+    zle vi-set-mark
+    zle vi-backward-word
+    zle -U s
+    zle vi-set-mark
+}
 visual-forward-word() { zle visual-mode; zle vi-forward-char; command-forward-word}
-command-back-word() { zle visual-mode; zle vi-backward-word}
 visual-back-word() { zle visual-mode; zle vi-backward-char; command-back-word}
+insert-word-start() { zle -U s; zle vi-goto-mark; zle vi-insert }
+append-word-end() { zle -U e; zle vi-goto-mark; zle vi-add-next }
 zle -N command-forward-word
-zle -N visual-forward-word
 zle -N command-back-word
+zle -N visual-forward-word
 zle -N visual-back-word
+zle -N insert-word-start
+zle -N append-word-end
+bindkey -a "o" command-mark-a
 bindkey -a "w" command-forward-word
 bindkey -M visual "w" visual-forward-word
 bindkey -a "b" command-back-word
 bindkey -M visual "b" visual-back-word
+bindkey -M visual "i" insert-word-start
+bindkey -M visual "a" append-word-end
 
 
 export EDITOR="vim"
@@ -188,6 +211,26 @@ alias ll='ls --color -lah'
 # alias vi='vim'
 alias rm='rm -i'
 alias grep='grep --color'
+
+hx() {
+    poetry_path=$(poetry env info -p)
+    if [[ $? == 0 ]]
+    then
+        PYTHONPATH=$poetry_path/lib/python3.11/site-packages:$PYTHONPATH ~/.cargo/bin/hx $@
+    else
+        ~/.cargo/bin/hx $@
+    fi
+}
+
+vi() {
+    poetry_path=$(poetry env info -p)
+    if [[ $? == 0 ]]
+    then
+        PYTHONPATH=$poetry_path/lib/python3.11/site-packages:$PYTHONPATH vim -p $@
+    else
+        vim -p $@
+    fi
+}
 
 spin() {
     set +o monitor
