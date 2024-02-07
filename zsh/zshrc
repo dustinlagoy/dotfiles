@@ -221,7 +221,7 @@ hx() {
         echo "inject $poetry_path into helix container"
         docker $args -v $poetry_path:/poetry-lib $image /bin/sh -c "PYTHONPATH=/poetry-lib:PYTHONPATH /hx $@"
     else
-        docker "$args" $image /hx $@
+        docker $args $image /hx $@
     fi
 }
 
