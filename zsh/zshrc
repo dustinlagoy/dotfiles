@@ -213,13 +213,14 @@ alias rm='rm -i'
 alias grep='grep --color'
 
 hx() {
-    args=("run" "--rm" "-it" "-v" "$PWD:/work" "-w" "/work" "-e" "TERM" "-e" "COLORTERM")
     image="docker.drao.nrc.ca/lagoyd/helix-image:latest"
+    docker pull $image
+    args=("run" "--rm" "-it" "-v" "$PWD:/work" "-w" "/work" "-e" "TERM" "-e" "COLORTERM=truecolor")
     poetry_path="$(poetry env info -p 2>/dev/null)/lib/python3.11/site-packages"
     if [[ $? == 0 ]]
     then
         echo "inject $poetry_path into helix container"
-        docker $args -v $poetry_path:/poetry-lib $image /bin/sh -c "PYTHONPATH=/poetry-lib:PYTHONPATH /hx $@"
+        docker $args -v $poetry_path:/poetry-lib $image /bin/bash -c "PYTHONPATH=/poetry-lib:PYTHONPATH /hx ${@[@]}"
     else
         docker $args $image /hx $@
     fi
