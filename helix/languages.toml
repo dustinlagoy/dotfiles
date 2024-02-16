@@ -36,12 +36,12 @@ formatter = { command = "bash", args = ["-c", "isort - | black -"] }
 [[language]]
 name = "c"
 auto-format = true
-formatter = { command = "clang-format-16", args = ["--style=Chromium"] }
+formatter = { command = "clang-format", args = ["--style=Chromium"] }
 
 [[language]]
 name = "cpp"
 auto-format = true
-formatter = { command = "clang-format-16", args = ["--style=Chromium"] }
+formatter = { command = "clang-format", args = ["--style=Chromium"] }
 
 [language-server.typst-lsp]
 command = "typst-lsp"

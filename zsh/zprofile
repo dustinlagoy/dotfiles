@@ -1,21 +1,2 @@
 export TERM=xterm-256color
 LD_LIBRARY_PATH=""
-export PATH="/home/lagoyd/.local/bin:${PATH}"
-export PATH="/home/lagoyd/Downloads/ltex-ls-16.0.0/bin:${PATH}"
-
-# for nvidia drivers with sway
-export WLR_NO_HARDWARE_CURSORS=1
-
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
-tango-database-interface() {
-    IMAGE="docker.drao.nrc.ca/drao-software/common/tango-database-interface/image:1.1.1"
-    docker run --rm -it \
-        -e TANGO_HOST \
-        -v $PWD:/json:Z \
-        --net=host \
-        $IMAGE \
-        tango_database_interface $@
-}
