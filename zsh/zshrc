@@ -221,6 +221,11 @@ hx() {
     then
         echo "inject $poetry_path into helix container"
         docker $args -v $poetry_path:/poetry-lib $image /bin/bash -c "PYTHONPATH=/poetry-lib:PYTHONPATH /hx ${@[@]}"
+    elif [[ -e venv ]]
+    then
+        venv_path="$PWD/venv/lib/python3.10/site-packages"
+        echo "inject $venv_path into helix container"
+        docker $args -v $venv_path:/venv-lib $image /bin/bash -c "PYTHONPATH=/venv-lib:PYTHONPATH /hx ${@[@]}"
     else
         docker $args $image /hx $@
     fi
