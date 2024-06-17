@@ -214,7 +214,7 @@ alias grep='grep --color'
 
 hx() {
     image="docker.drao.nrc.ca/lagoyd/helix-image:latest"
-    docker pull $image &
+    docker pull $image &>/dev/null &
     args=("run" "--rm" "-it" "-v" "$PWD:/work" "-w" "/work" "--user" "$UID:$GID" "-e" "TERM" "-e" "COLORTERM=truecolor" "-e DISPLAY=$DISPLAY" "-v" "$HOME/.Xauthority:/root/.Xauthority")
     poetry_path="$(poetry env info -p 2>/dev/null)"
     py_version=${poetry_path##*py}
@@ -222,12 +222,12 @@ hx() {
     if [[ $? == 0 ]]
     then
         echo "inject $lib_path into helix container"
-        docker $args -v $lib_path:/poetry-lib $image /bin/bash -c "PYTHONPATH=/poetry-lib:PYTHONPATH /hx ${@[@]}"
+        docker $args -v $lib_path:/poetry-lib $image /bin/bash -c "PYTHONPATH=/poetry-lib:./libs:\$PYTHONPATH /hx ${@[@]}"
     elif [[ -e venv ]]
     then
         venv_path="$PWD/venv/lib/python3.10/site-packages"
         echo "inject $venv_path into helix container"
-        docker $args -v $venv_path:/venv-lib $image /bin/bash -c "PYTHONPATH=/venv-lib:PYTHONPATH /hx ${@[@]}"
+        docker $args -v $venv_path:/venv-lib $image /bin/bash -c "PYTHONPATH=/venv-lib:./libs:\$PYTHONPATH /hx ${@[@]}"
     else
         docker $args $image /bin/bash -c "/hx ${@[@]}"
     fi
