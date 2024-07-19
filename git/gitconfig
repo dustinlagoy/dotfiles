@@ -8,6 +8,12 @@
 [alias]
     l = log --branches --remotes --tags --graph --notes HEAD -n 17
     d = difftool
+[pager]
+    log = "perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight | less"
+    show = "perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight | less"
+    diff = "perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight | less"
+[interactive]
+    diffFilter = "perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight"
 [core]
     autocrlf = false
     safecrlf = true
