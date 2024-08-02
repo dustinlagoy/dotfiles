@@ -213,7 +213,7 @@ alias rm='rm -i'
 alias grep='grep --color'
 
 hx() {
-    image="docker.drao.nrc.ca/lagoyd/helix-image:latest"
+    image="git-collab.nrc-cnrc.gc.ca:4000/haa/draosw/dustin/helix-image:latest"
     docker pull $image &>/dev/null &
     args=("run" "--rm" "-it" "-v" "$PWD:/work" "-w" "/work" "--user" "$UID:$GID" "-e" "TERM" "-e" "COLORTERM=truecolor" "-e DISPLAY=$DISPLAY" "-v" "$HOME/.Xauthority:/root/.Xauthority")
     poetry_path="$(poetry env info -p 2>/dev/null)"
