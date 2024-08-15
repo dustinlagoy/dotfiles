@@ -37,3 +37,5 @@
     cmd = /usr/bin/icdiff --truncate --line-numbers $LOCAL $REMOTE
 [push]
 	followTags = true
+[tag]
+    sort = v:refname
