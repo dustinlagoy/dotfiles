@@ -1,2 +1,3 @@
 export TERM=xterm-256color
 LD_LIBRARY_PATH=""
+export PATH="/home/lagoyd/.local/bin:$PATH"
