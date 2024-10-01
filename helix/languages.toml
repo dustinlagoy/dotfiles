@@ -18,7 +18,7 @@ name = "markdown"
 language-servers = ["ltex-lsp", "marksman"]
 auto-format = true
 # sed a workaround for https://github.com/prettier/prettier/issues/5019
-formatter = { command = "bash", args= ["-c", "npx prettier --parser markdown --tab-width 4 | sed 's/\\(^ *- \\) */\\1/'"]}
+formatter = { command = "bash", args= ["-c", "prettier --parser markdown --tab-width 4 | sed 's/\\(^ *- \\) */\\1/'"]}
 
 [language-server.pylsp]
 [language-server.pylsp.config]
