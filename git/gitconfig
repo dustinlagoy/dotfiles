@@ -39,3 +39,9 @@
 	followTags = true
 [tag]
     sort = v:refname
+[blame]
+    coloring=repeatedLines
+    coloring=highlightRecent
+[color "blame"]
+    # light gray
+    repeatedLines = 145
