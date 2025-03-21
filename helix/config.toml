@@ -9,6 +9,7 @@ idle-timeout = 0
 enable = true
 
 [keys.normal]
+C-a = "code_action"
 K = "half_page_up"
 J = "half_page_down"
 "," = ["goto_prev_diag", "code_action"]
@@ -16,3 +17,6 @@ J = "half_page_down"
 [keys.select]
 K = "half_page_up"
 J = "half_page_down"
+
+[keys.insert]
+C-a = "code_action"
