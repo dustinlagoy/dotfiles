@@ -1,6 +1,6 @@
 [user]
     name = Dustin Lagoy
-	email = dustin.lagoy@nrc-cnrc.gc.ca
+	email = dustin@lagoy.org
 [log]
     date = short
 [format]
@@ -9,11 +9,11 @@
     l = log --branches --remotes --tags --graph --notes HEAD -n 17
     d = difftool
 [pager]
-    log = "perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight | less"
-    show = "perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight | less"
-    diff = "perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight | less"
+    log = "perl /usr/share/git/diff-highlight/diff-highlight | less"
+    show = "perl /usr/share/git/diff-highlight/diff-highlight | less"
+    diff = "perl /usr/share/git/diff-highlight/diff-highlight | less"
 [interactive]
-    diffFilter = "perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight"
+    diffFilter = "perl /usr/share/git/diff-highlight/diff-highlight"
 [core]
     autocrlf = false
     safecrlf = true
