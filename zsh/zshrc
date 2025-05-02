@@ -1,13 +1,46 @@
 run_zsh_setup() {
+    # scenarios
+    # - connected via local tty: run/use ssh agent
+    # - connected remotely: start tmux, use remote agent and fallback to local
+    # - running in container: use bound agent
+    if ! ssh_agent_configured
+    then
+        echo "no ssh agent configured"
+        if can_run_ssh_agent && ! local_ssh_agent_running
+        then
+            start_ssh_agent
+        fi
+        if local_ssh_agent_running
+        then
+            eval "$(<~/.ssh-agent-thing)" > /dev/null
+        fi
+    fi
     # Run ssh agent if not in an ssh session
     if currently_in_ssh_tty; then
+        echo "in ssh tty"
         setup_ssh_session
         if test -z $ZSH_EXECUTION_STRING; then
-            launch_multiplexer
+            launch_tmux
         fi
-    else
-        start_or_connect_to_ssh_agent
     fi
+}
+
+local_ssh_agent_running() {
+    pgrep -u "$USER" ssh-agent > /dev/null
+}
+
+ssh_agent_configured() {
+    test -n "$SSH_AUTH_SOCK"
+}
+
+can_run_ssh_agent() {
+    [[ -f $HOME/.ssh/id_rsa || -f $HOME/.ssh/id_ed25519 ]]
+}
+
+start_ssh_agent() {
+    echo "starting ssh agent"
+    ssh-agent > ~/.ssh-agent-thing
+    #eval "$(<~/.ssh-agent-thing)" > /dev/null
 }
 
 currently_in_ssh_tty() {
@@ -26,52 +59,24 @@ currently_in_ssh_session() {
     return 1
 }
 
-have_ssh_agent() {
-    test -n "$SSH_AUTH_SOCK"
-}
-
-have_remote_ssh_agent() {
-    have_ssh_agent && currently_in_ssh_tty
-}
-
 setup_ssh_session() {
     if test -n "$DISPLAY"
     then
+        echo "caching display variable"
         echo $DISPLAY > ~/.display.txt
     fi
-    if have_remote_ssh_agent
+    if ssh_agent_configured
     then
+        echo "caching ssh agent socket"
         echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK; export SSH_AUTH_SOCK;" > ~/.ssh-agent-thing-remote
         export WANTS_REMOTE_SSH_AGENT='true'
-    else
-        start_or_connect_to_ssh_agent
-    fi
-}
-
-start_or_connect_to_ssh_agent() {
-    if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-        ssh-agent > ~/.ssh-agent-thing
-        eval "$(<~/.ssh-agent-thing)" > /dev/null
-    fi
-    if [[ "$SSH_AGENT_PID" == "" ]]; then
-        eval "$(<~/.ssh-agent-thing)" > /dev/null
-    fi
-}
-
-launch_multiplexer() {
-    if which tmux >/dev/null 2>&1
-    then
-        launch_tmux
-    elif which screen >/dev/null 2>&1
-    then
-        launch_screen
     fi
 }
 
 launch_tmux() {
     # if not already inside a tmux session...
     if test -z "$TMUX"; then
-        echo really launch
+        echo "launch tmux"
         # attach to any unused sessions, or start a new session
         # tmux ls
         # echo "get session"
@@ -88,18 +93,6 @@ launch_tmux() {
    while test -z ${TMUX}; do
        exit
    done
-}
-
-launch_screen() {
-    # if not already inside a screen session...
-    if test -z "$STY"; then
-        # attach to any unused sessions, or start a new session
-        screen -RR
-    fi
-    # when quitting screen, quit totally
-    while test -z ${STY}; do
-        exit
-    done
 }
 
 run_zsh_setup
