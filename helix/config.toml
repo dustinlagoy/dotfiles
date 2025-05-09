@@ -3,16 +3,25 @@ theme = "base16"
 [editor]
 bufferline = "multiple"
 idle-timeout = 0
+gutters = ["diagnostics", "coverage", "line-numbers", "diff"]
+#gutters = ["diagnostics", "line-numbers", "coverage", "diff"]
 # [editor.whitespace]
 # render = "all"
 [editor.soft-wrap]
 enable = true
+[editor.indent-guides]
+render = true
+# [editor.whitespace]
+# render = "all"
 
 [keys.normal]
 C-a = "code_action"
 K = "half_page_up"
 J = "half_page_down"
 "," = ["goto_prev_diag", "code_action"]
+# to help with list indenting S-tab to indent list item and C-tab to dedent
+S-tab = "@<esc>I<tab><esc>gl"
+C-tab = "@<esc>I<backspace><esc>gl"
 
 [keys.select]
 K = "half_page_up"
@@ -20,3 +29,5 @@ J = "half_page_down"
 
 [keys.insert]
 C-a = "code_action"
+S-tab = "@<esc>I<tab><esc>A"
+C-tab = "@<esc>I<backspace><esc>A"
