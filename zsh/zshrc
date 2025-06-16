@@ -209,13 +209,13 @@ alias rm='rm -i'
 alias grep='grep --color'
 
 hx() {
-    if [ -d /tmp/helix-image ]
+    if [ -d ~/src/helix-image ]
     then
-        (cd /tmp/helix-image; git pull &)
+        (cd ~/src/helix-image; git pull &)
     else
-        git clone --depth 1 git@git-collab.nrc-cnrc.gc.ca:haa/draosw/proto/helix-image.git /tmp/helix-image
+        git clone --depth 1 git@git-collab.nrc-cnrc.gc.ca:haa/draosw/proto/helix-image.git ~/src/helix-image
     fi
-    /tmp/helix-image/run.sh ${@[@]}
+    ~/src/helix-image/run.sh ${@[@]}
 }
 
 vi() {
@@ -254,19 +254,22 @@ spin() {
 }
 
 gcred() {
-    read -s "pw?password: "; export cred="protocol=https
-host=gitlab.drao.nrc.ca
-username=lagoyd
+    pw=$(gopass websites/git-collab.nrc-cnrc.gc.ca/dustin.lagoy read-only)
+    export cred="protocol=https
+host=git-collab.nrc-cnrc.gc.ca
+username=dustin.lagoy
 password=$pw"
     echo $cred | git credential approve
     unset cred
+    unset pw
 }
 
 dbuild() {
     export DOCKER_BUILDKIT=1
-    read -s "pw?password: "; export cred="protocol=https
-host=gitlab.drao.nrc.ca
-username=lagoyd
+    pw=$(gopass websites/git-collab.nrc-cnrc.gc.ca/dustin.lagoy read-only)
+    export cred="protocol=https
+host=git-collab.nrc-cnrc.gc.ca
+username=dustin.lagoy
 password=$pw"
     name=$(basename $PWD)
     build_cmd="docker build --secret id=git_credentials,env=cred -t $name $@"

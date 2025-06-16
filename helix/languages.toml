@@ -13,6 +13,11 @@ use-grammars = { only = [
 ]}
 
 [[language]]
+name = "dockerfile"
+auto-format = true
+language-servers = ["efm"]
+
+[[language]]
 name = "rust"
 language-servers = ["rust-analyzer", "lsp-ai"]
 auto-format = true
@@ -20,7 +25,7 @@ indent = { tab-width = 4, unit = "\t" }
 
 [[language]]
 name = "markdown"
-language-servers = ["ltex-lsp", "marksman", "lsp-ai"]
+language-servers = ["harper-ls", "marksman", "lsp-ai"]
 # comment-token = "-"
 comment-tokens = ["-", "+", "*", "1.", ">", "- [ ]"]
 auto-format = true
@@ -40,6 +45,7 @@ name = "c"
 auto-format = true
 formatter = { command = "clang-format", args = ["--style=Chromium"] }
 indent = { tab-width = 2, unit = "\t" }
+file-types = ["c", "p4"]
 
 [[language]]
 name = "cpp"
@@ -85,6 +91,14 @@ pylsp.plugins.pycodestyle.enabled = false
 pylsp.plugins.black.enabled = true
 pylsp.plugins.flake8.enabled = true
 
+[language-server.efm]
+command = "efm-langserver"
+args = ["-c", "/root/.config/helix/efm.yaml"]
+
+[language-server.harper-ls]
+command = "harper-ls"
+args = ["--stdio"]
+
 [language-server.lsp-ai]
 command = "lsp-ai"
 timeout = 300
@@ -102,6 +116,11 @@ memory.file_store = {}
 # completion.parameters.max_context = 4096
 # completion.parameters.options.num_predict = 64
 # completion.parameters.options.stop = ["\n"]
+[language-server.lsp-ai.config.models.devstral]
+type = "ollama"
+chat_endpoint = "http://ollama:11434/api/chat"
+generate_endpoint = "http://ollama:11434/api/generate"
+model = "devstral"
 [language-server.lsp-ai.config.models.dc2]
 type = "ollama"
 chat_endpoint = "http://ollama:11434/api/chat"
@@ -128,10 +147,16 @@ chat_endpoint = "http://ollama:11434/api/chat"
 generate_endpoint = "http://ollama:11434/api/generate"
 model = "deepseek-r1:32b"
 [language-server.lsp-ai.config.completion]
-model = "dc2"
+model = "devstral"
 parameters.max_context = 4096
 parameters.options.num_predict = 512
 parameters.options.stop = ["\n"]
+[[language-server.lsp-ai.config.actions]]
+action_display_name = "Complete devstral"
+model = "devstral"
+parameters.max_context = 4096
+parameters.options.num_predict = 512
+parameters.options.stop = ["<file_sep>", "\n\n"]
 [[language-server.lsp-ai.config.actions]]
 action_display_name = "Complete DC2"
 model = "dc2"
@@ -156,6 +181,15 @@ parameters.options.stop = ["<file_sep>", "\n\n"]
 [[language-server.lsp-ai.config.actions]]
 action_display_name = "FIM Complete DC2"
 model = "dc2"
+parameters.max_context = 4096
+parameters.fim.start = "<｜fim▁begin｜>"
+parameters.fim.middle = "<｜fim▁hole｜>"
+parameters.fim.end = "<｜fim▁end｜>"
+parameters.options.num_predict = 512
+parameters.options.stop = ["<file_sep>", "\n\n"]
+[[language-server.lsp-ai.config.actions]]
+action_display_name = "FIM Complete devstral"
+model = "devstral"
 parameters.max_context = 4096
 parameters.fim.start = "<｜fim▁begin｜>"
 parameters.fim.middle = "<｜fim▁hole｜>"
