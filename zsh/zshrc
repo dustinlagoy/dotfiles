@@ -95,6 +95,18 @@ launch_tmux() {
    done
 }
 
+check_dotfiles() {
+    if [ -d $HOME/dotfiles ]
+    then
+        check=$(cd $HOME/dotfiles && git fetch --dry-run)
+        if [[ $check != "" ]]
+        then
+            echo "changes detected in dotfiles:\n$check"
+            echo "to update run: cd $HOME/dotfiles && git pull"
+        fi
+    fi
+}
+
 run_zsh_setup
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -319,3 +331,6 @@ precmd() {
         fi
     fi
 }
+
+# start here with POWERLEVEL9K_INSTANT_PROMPT=quiet for best experience
+check_dotfiles
