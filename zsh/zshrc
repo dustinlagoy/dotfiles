@@ -108,6 +108,7 @@ check_dotfiles() {
 }
 
 run_zsh_setup
+(check_dotfiles &)
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -331,6 +332,3 @@ precmd() {
         fi
     fi
 }
-
-# start here with POWERLEVEL9K_INSTANT_PROMPT=quiet for best experience
-check_dotfiles
