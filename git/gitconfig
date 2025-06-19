@@ -9,11 +9,11 @@
     l = log --branches --remotes --tags --graph --notes HEAD -n 17
     d = difftool
 [pager]
-    log = "perl /usr/share/git/diff-highlight/diff-highlight | less"
-    show = "perl /usr/share/git/diff-highlight/diff-highlight | less"
-    diff = "perl /usr/share/git/diff-highlight/diff-highlight | less"
+    log = "$HOME/dotfiles/git/pager.sh | less"
+    show = "$HOME/dotfiles/git/pager.sh | less"
+    diff = "$HOME/dotfiles/git/pager.sh | less"
 [interactive]
-    diffFilter = "perl /usr/share/git/diff-highlight/diff-highlight"
+    diffFilter = "$HOME/dotfiles/git/pager.sh"
 [core]
     autocrlf = false
     safecrlf = true
