@@ -1,4 +1,4 @@
 #!/bin/bash
-ln -s "$(pwd)/gpg-agent.conf" "$HOME/.gnupg/"
+../link.sh "$(pwd)/gpg-agent.conf" "$HOME/.gnupg/gpg-agent.conf"
 mkdir -p "$HOME/.local/bin"
-ln -s "$(pwd)/pinentry.sh" "$HOME/.local/bin/"
+../link.sh "$(pwd)/pinentry.sh" "$HOME/.local/bin/pinentry.sh"

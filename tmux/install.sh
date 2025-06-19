@@ -1,2 +1,2 @@
 #!/bin/bash
-ln -s "$(pwd)/tmux.conf" "$HOME/.tmux.conf"
+../link.sh "$(pwd)/tmux.conf" "$HOME/.tmux.conf"

@@ -1,2 +1,2 @@
 #!/bin/bash
-ln -s "$(pwd)/gitconfig" "$HOME/.gitconfig"
+../link.sh "$(pwd)/gitconfig" "$HOME/.gitconfig"
