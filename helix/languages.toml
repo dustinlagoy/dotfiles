@@ -21,7 +21,6 @@ language-servers = ["efm"]
 name = "rust"
 language-servers = ["rust-analyzer", "lsp-ai"]
 auto-format = true
-indent = { tab-width = 4, unit = "\t" }
 
 [[language]]
 name = "markdown"
@@ -31,27 +30,23 @@ comment-tokens = ["-", "+", "*", "1.", ">", "- [ ]"]
 auto-format = true
 # sed a workaround for https://github.com/prettier/prettier/issues/5019
 formatter = { command = "bash", args= ["-c", "prettier --parser markdown --tab-width 4 | sed 's/\\(^ *- \\) */\\1/'"]}
-indent = { tab-width = 4, unit = "\t" }
 
 [[language]]
 name = "python"
 language-servers = ["pylsp", "lsp-ai"]
 auto-format = true
 formatter = { command = "bash", args = ["-c", "isort - | black -"] }
-indent = { tab-width = 4, unit = "\t" }
 
 [[language]]
 name = "c"
 auto-format = true
 formatter = { command = "clang-format", args = ["--style=Chromium"] }
-indent = { tab-width = 2, unit = "\t" }
 file-types = ["c", "p4"]
 
 [[language]]
 name = "cpp"
 auto-format = true
 formatter = { command = "clang-format", args = ["--style=Chromium"] }
-indent = { tab-width = 2, unit = "\t" }
 
 [[language]]
 name = "typst"
@@ -60,7 +55,7 @@ injection-regex = "^typ(st)?$"
 roots = ["typst.toml"]
 comment-token = "//"
 file-types = ["typ"]
-indent = { tab-width = 2, unit = "\t" }
+indent = { tab-width = 2, unit = " " }
 language-servers = ["typst-lsp"]
 text-width = 100
 rulers = [100]
