@@ -224,7 +224,7 @@ alias grep='grep --color'
 hx() {
     if [ -d ~/src/helix-image ]
     then
-        (cd ~/src/helix-image; git pull &)
+        (cd ~/src/helix-image; git pull >/dev/null &)
     else
         git clone --depth 1 git@git-collab.nrc-cnrc.gc.ca:haa/draosw/proto/helix-image.git ~/src/helix-image
     fi
