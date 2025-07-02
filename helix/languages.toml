@@ -28,8 +28,7 @@ language-servers = ["harper-ls", "marksman", "lsp-ai"]
 # comment-token = "-"
 comment-tokens = ["-", "+", "*", "1.", ">", "- [ ]"]
 auto-format = true
-# sed a workaround for https://github.com/prettier/prettier/issues/5019
-formatter = { command = "bash", args= ["-c", "prettier --parser markdown --tab-width 4 | sed 's/\\(^ *- \\) */\\1/'"]}
+formatter = { command = "prettier", args = ["--parser", "markdown", "--tab-width", "4"] }
 
 [[language]]
 name = "python"
