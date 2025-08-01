@@ -50,8 +50,9 @@ currently_in_ssh_tty() {
 currently_in_ssh_session() {
     if currently_in_ssh_tty; then
         return 0
-    elif test -n "$TMUX_PANE"; then
-        base_tty_of_tmux_session=$(tmux list-clients -t ${TMUX_PANE:1} -F '#{client_tty}')
+    elif test -n "$TMUX"; then
+        tmux_session=$(tmux display-message -p '#S')
+        base_tty_of_tmux_session=$(tmux list-clients -t ${tmux_session} -F '#{client_tty}')
         if who | grep "${base_tty_of_tmux_session:5} " > /dev/null; then
             return 0
         fi
@@ -69,7 +70,6 @@ setup_ssh_session() {
     then
         echo "caching ssh agent socket"
         echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK; export SSH_AUTH_SOCK;" > ~/.ssh-agent-thing-remote
-        export WANTS_REMOTE_SSH_AGENT='true'
     fi
 }
 
@@ -326,7 +326,7 @@ precmd() {
         then
             export DISPLAY=$(cat ~/.display.txt)
         fi
-        if [[ $WANTS_REMOTE_SSH_AGENT == 'true' ]]
+        if test -s ~/.ssh-agent-thing-remote
         then
             eval "$(<~/.ssh-agent-thing-remote)" > /dev/null
         fi
