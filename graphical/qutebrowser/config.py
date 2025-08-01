@@ -148,6 +148,7 @@ config.bind("J", "scroll-page 0 0.5")
 config.bind("K", "scroll-page 0 -0.5")
 config.bind("<Ctrl-Shift-d>", "tab-close -o")
 config.bind("<Ctrl-d>", "tab-close")
+config.unbind("d")
 config.bind("j", "scroll down")
 config.bind("k", "scroll up")
 
