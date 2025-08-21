@@ -1,0 +1,107 @@
+{
+  "models": {
+    "large": {"model":"NRC-Global-gpt-5","provider":"azure"},
+    "medium": {"model":"NRC-Global-gpt-5-mini","provider":"azure"},
+    "small": {"model":"NRC-Global-gpt-5-mini","provider":"azure"}
+  },
+  "providers": {
+    "azure": {
+      "name": "nrc-azure",
+      "type": "azure",
+      "base_url": "https://efim-m4muq80z-eastus2.cognitiveservices.azure.com",
+      "models": [
+        {
+          "id": "NRC-Global-gpt-5",
+          "name": "NRC GPT-5",
+          "cost_per_1m_in": 1.25,
+          "cost_per_1m_out": 10,
+          "cost_per_1m_in_cached": 0.125,
+          "cost_per_1m_out_cached": 0.125,
+          "context_window": 400000,
+          "default_max_tokens": 50000,
+          "can_reason": true,
+          "has_reasoning_efforts": true,
+          "default_reasoning_effort": "minimal",
+          "supports_attachments": true
+        },
+        {
+          "id": "NRC-Global-gpt-5-mini",
+          "name": "NRC GPT-5 mini",
+          "cost_per_1m_in": 0.25,
+          "cost_per_1m_out": 2,
+          "cost_per_1m_in_cached": 0.025,
+          "cost_per_1m_out_cached": 0.025,
+          "context_window": 400000,
+          "default_max_tokens": 50000,
+          "can_reason": true,
+          "has_reasoning_efforts": true,
+          "default_reasoning_effort": "minimal",
+          "supports_attachments": true
+        },
+        {
+          "id": "NRC-Global-gpt-4.1",
+          "name": "NRC GPT-4.1",
+          "cost_per_1m_in": 2,
+          "cost_per_1m_out": 8,
+          "cost_per_1m_in_cached": 0.5,
+          "cost_per_1m_out_cached": 0.5,
+          "context_window": 1047576,
+          "default_max_tokens": 16384,
+          "can_reason": false,
+          "supports_attachments": true
+        }
+      ]
+    },
+    "ollama": {
+      "name": "ollama",
+      "base_url": "http://ollama:11434/v1/",
+      "type": "openai",
+      "models": [
+        {
+          "name": "Mistral 7B",
+          "id": "mistral:7b",
+          "context_window": 64000,
+          "default_max_tokens": 20000
+        },
+        {
+          "name": "Devstral 24B",
+          "id": "devstral",
+          "context_window": 64000,
+          "default_max_tokens": 20000
+        },
+        {
+          "name": "Qwen 3 4B",
+          "id": "qwen3:4b",
+          "context_window": 64000,
+          "default_max_tokens": 20000,
+          "can_reason": true,
+          "has_reasoning_efforts": false
+        },
+        {
+          "name": "Qwen 3 8B",
+          "id": "qwen3:8b",
+          "context_window": 64000,
+          "default_max_tokens": 20000,
+          "can_reason": true,
+          "has_reasoning_efforts": false
+        },
+        {
+          "name": "Qwen 3 30B",
+          "id": "qwen3:30b",
+          "context_window": 64000,
+          "default_max_tokens": 20000,
+          "can_reason": true,
+          "has_reasoning_efforts": false
+        },
+        {
+          "name": "Qwen 3 32B",
+          "id": "qwen3:32b",
+          "context_window": 64000,
+          "default_max_tokens": 20000,
+          "can_reason": true,
+          "has_reasoning_efforts": false
+        }
+      ]
+    }
+  }
+,"options":{"tui":{"compact_mode":false}}}

@@ -3,3 +3,9 @@ LD_LIBRARY_PATH=""
 export PATH="$HOME/.local/bin:$PATH"
 export PINENTRY_USER_DATA=USE_TTY=1
 export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
+
+crush () {
+	AZURE_OPENAI_API_VERSION=2025-04-01-preview \
+	AZURE_OPENAI_API_KEY="$(gopass ai-zone/keys gpt-5-chat-key 2>/dev/null || read -e '?Azure key: ')" \
+	$HOME/go/bin/crush $@
+}
