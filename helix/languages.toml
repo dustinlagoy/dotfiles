@@ -31,6 +31,15 @@ auto-format = true
 formatter = { command = "prettier", args = ["--parser", "markdown", "--tab-width", "4"] }
 
 [[language]]
+name = "csv"
+indent = { tab-width = 16, unit = "\t" }
+
+[[language]]
+name = "go"
+language-servers = ["gopls", "lsp-ai"]
+formatter = { command = "golines" }
+
+[[language]]
 name = "python"
 language-servers = ["pylsp", "lsp-ai"]
 auto-format = true
@@ -71,6 +80,12 @@ soft-wrap.wrap-at-text-width = true
 [[grammar]]
 name = "typst"
 source = { path = "/home/lagoyd/src/uben0-tree-sitter-typst" }
+
+[language-server.gopls]
+command = "gopls"
+args = ["-logfile=/tmp/gopls.log", "serve"]
+[language-server.gopls.config]
+"ui.diagnostic.staticcheck" = true
 
 [language-server.ltex-lsp]
 command = "ltex-ls"
