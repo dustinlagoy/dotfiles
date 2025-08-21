@@ -2,9 +2,14 @@ ALMA
 ATAC
 BittWare
 Christophe
+ECI
 Galt
+NEMA
+NRAO
 SR8
 TeraBox
 Tofino
+VLAN
+ZR
 correlator
 multicast
