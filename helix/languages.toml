@@ -110,6 +110,7 @@ args = ["--stdio"]
 [language-server.harper-ls.config.harper-ls]
 userDictPath = "/root/.config/dictionary.txt"
 linters.SentenceCapitalization = false
+linters.ToDoHyphen = false
 
 [language-server.lsp-ai]
 command = "lsp-ai"
