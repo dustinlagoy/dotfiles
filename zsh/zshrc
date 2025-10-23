@@ -314,6 +314,30 @@ prun() {
     podman run --rm -it -v $PWD:/src/$name -w /src/$name $name $@
 }
 
+dex() {
+    dir=$PWD
+    subdir=""
+    while;
+    do
+        if [[ $dir == "/" ]]
+        then
+            echo "no container found"
+            return
+        fi
+        container=$(docker ps --format "{{.Names}}" --filter "volume=$dir" -n 1)
+        if [[ $container == "" ]]
+        then
+            subdir="$(basename $dir)/$subdir"
+            dir=$(dirname $dir)
+        else
+            break
+        fi
+    done
+    base=$(docker inspect $container -f "{{.Config.WorkingDir}}")
+    dir="${base}/$subdir"
+    docker exec -it -w $dir $container $@
+}
+
 history(){
     command sed 's/^. [0-9]*...//' < $HOME/.histfile | grep -i --color "$@"
 }
