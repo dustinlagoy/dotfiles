@@ -315,6 +315,11 @@ prun() {
 }
 
 dex() {
+    args="exec -it"
+    if [[ $1 == "-r" ]] then
+        args="${args} -u 0"
+        shift
+    fi
     dir=$PWD
     subdir=""
     while;
@@ -335,7 +340,8 @@ dex() {
     done
     base=$(docker inspect $container -f "{{.Config.WorkingDir}}")
     dir="${base}/$subdir"
-    docker exec -it -w $dir $container $@
+    args="${args} -w ${dir}"
+    docker ${=args} $container $@
 }
 
 history(){
