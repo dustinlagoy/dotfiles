@@ -2,7 +2,7 @@
   "models": {
     "large": {"model":"NRC-Global-gpt-5","provider":"azure"},
     "medium": {"model":"NRC-Global-gpt-5-mini","provider":"azure"},
-    "small": {"model":"NRC-Global-gpt-5-mini","provider":"azure"}
+    "small": {"model":"NRC-Global-gpt-4.1","provider":"azure"}
   },
   "mcp": {
     "markitdown": {
@@ -19,6 +19,7 @@
       "base_url": "https://efim-m4muq80z-eastus2.cognitiveservices.azure.com",
       "models": [
         {
+          "xx":"does not work with crush 0.16.0 (0.12.3 works) because this checks reasoning based on the prefix: https://github.com/charmbracelet/fantasy/blob/a8dd0222e3a930bd34545fcee1ff7a7b46024590/providers/openai/language_model.go#L549",
           "id": "NRC-Global-gpt-5",
           "name": "NRC GPT-5",
           "cost_per_1m_in": 1.25,
@@ -29,7 +30,7 @@
           "default_max_tokens": 50000,
           "can_reason": true,
           "has_reasoning_efforts": true,
-          "default_reasoning_effort": "minimal",
+          "default_reasoning_effort": "medium",
           "supports_attachments": true
         },
         {
