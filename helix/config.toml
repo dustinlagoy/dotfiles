@@ -2,17 +2,20 @@ theme = "base16"
 
 [editor]
 bufferline = "multiple"
-idle-timeout = 0
+idle-timeout = 50
+completion-timeout = 50
 gutters = ["diagnostics", "coverage", "line-numbers", "diff"]
 #gutters = ["diagnostics", "line-numbers", "coverage", "diff"]
+end-of-line-diagnostics = "info"
 # [editor.whitespace]
 # render = "all"
 [editor.soft-wrap]
 enable = true
 [editor.indent-guides]
 render = true
-# [editor.whitespace]
-# render = "all"
+[editor.inline-diagnostics]
+cursor-line = "warning"
+other-lines = "disable"
 
 [keys.normal]
 C-a = "code_action"

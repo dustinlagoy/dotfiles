@@ -3,9 +3,11 @@ ATAC
 Benoit
 BittWare
 Christophe
+DHCP
 ECI
 Galt
 Gbps
+MDA
 NEMA
 NRAO
 P4
@@ -17,6 +19,7 @@ TeraBox
 Tofino
 VLAN
 VLANs
+VLBI
 ZR
 beamformer
 beamforming
