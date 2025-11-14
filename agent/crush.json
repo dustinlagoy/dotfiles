@@ -1,4 +1,17 @@
 {
+  "options": {
+    "disable_metrics": true,
+    "attribution": {
+      "trailer_style": "none",
+      "generated_with": false
+    },
+    "tui": {
+      "compact_mode": false
+    },
+    "context_paths": [
+      "/not/.config/crush/long.md"
+    ]
+  },
   "models": {
     "large": {"model":"NRC-Global-gpt-5","provider":"azure"},
     "medium": {"model":"NRC-Global-gpt-5-mini","provider":"azure"},
@@ -113,4 +126,4 @@
       ]
     }
   }
-,"options":{"tui":{"compact_mode":false}}}
+}
