@@ -1,7 +1,7 @@
 run_zsh_setup() {
     # scenarios
     # - connected via local tty: run/use ssh agent
-    # - connected remotely: start tmux, use remote agent and fallback to local
+    # - connected remotely: start zellij, use remote agent and fallback to local
     # - running in container: use bound agent
     if ! ssh_agent_configured
     then
@@ -20,7 +20,7 @@ run_zsh_setup() {
         echo "in ssh tty"
         setup_ssh_session
         if test -z $ZSH_EXECUTION_STRING; then
-            launch_tmux
+            launch_zellij
         fi
     fi
 }
@@ -50,12 +50,12 @@ currently_in_ssh_tty() {
 currently_in_ssh_session() {
     if currently_in_ssh_tty; then
         return 0
-    elif test -n "$TMUX"; then
-        tmux_session=$(tmux display-message -p '#S')
-        base_tty_of_tmux_session=$(tmux list-clients -t ${tmux_session} -F '#{client_tty}')
-        if who | grep "${base_tty_of_tmux_session:5} " > /dev/null; then
-            return 0
-        fi
+    elif [[ -v ZELLIJ ]]; then
+        # mux_session=$(tmux display-message -p '#S')
+        # base_tty_of_tmux_session=$(tmux list-clients -t ${tmux_session} -F '#{client_tty}')
+        # if who | grep "${base_tty_of_tmux_session:5} " > /dev/null; then
+        #     return 0
+        # fi
     fi
     return 1
 }
@@ -73,26 +73,11 @@ setup_ssh_session() {
     fi
 }
 
-launch_tmux() {
-    # if not already inside a tmux session...
-    if test -z "$TMUX"; then
-        echo "launch tmux"
-        # attach to any unused sessions, or start a new session
-        # tmux ls
-        # echo "get session"
-        session=$(tmux ls | grep -v attached | head -1 | cut -f1 -d:)
-        if [[ $session == "" ]]; then
-            # echo "new $TERM"
-            tmux new-session
-        else
-            # echo "attach: $session"
-            tmux attach -t $session
-        fi
-   fi
-   # when quitting tmux, quit totally
-   while test -z ${TMUX}; do
-       exit
-   done
+launch_zellij() {
+    if [[ ! -v ZELLIJ ]]; then
+        echo "launch zellij"
+        exec zellij attach -c
+    fi
 }
 
 check_dotfiles() {
@@ -341,6 +326,7 @@ dex() {
     base=$(docker inspect $container -f "{{.Config.WorkingDir}}")
     dir="${base}/$subdir"
     args="${args} -w ${dir}"
+    echo "${=args} $container $@"
     docker ${=args} $container $@
 }
 
