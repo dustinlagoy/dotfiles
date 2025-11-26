@@ -5,9 +5,12 @@ BittWare
 Christophe
 DHCP
 ECI
+FW
 Galt
 Gbps
+HW
 MDA
+Matt
 NEMA
 NRAO
 P4
@@ -25,9 +28,11 @@ beamformer
 beamforming
 channelizer
 correlator
+correlators
 loopback
 multicast
 packetization
 sideband
 unicast
 visibilities
+wideband

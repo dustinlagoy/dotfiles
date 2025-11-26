@@ -9,6 +9,10 @@ gutters = ["diagnostics", "coverage", "line-numbers", "diff"]
 end-of-line-diagnostics = "info"
 # [editor.whitespace]
 # render = "all"
+auto-save.focus-lost = true
+[editor.auto-save.after-delay]
+enable = true
+timeout = 3000
 [editor.soft-wrap]
 enable = true
 [editor.indent-guides]
