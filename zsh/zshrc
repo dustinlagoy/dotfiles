@@ -92,6 +92,7 @@ check_dotfiles() {
     fi
 }
 
+export EDITOR="${HOME}/dotfiles/zsh/editor.sh"
 run_zsh_setup
 (check_dotfiles &)
 
@@ -195,8 +196,6 @@ bindkey -M visual "a" append-word-end
 source <(fzf --zsh)
 export FZF_CTRL_R_OPTS="--wrap"
 
-
-export EDITOR="vim"
 export PATH="$HOME/.local/bin:$PATH"
 
 alias :q="exit"
@@ -334,8 +333,6 @@ history(){
     command sed 's/^. [0-9]*...//' < $HOME/.histfile | grep -i --color "$@"
 }
 alias hist='history'
-
-export EDITOR="${HOME}/dotfiles/zsh/editor.sh"
 
 precmd() {
     if currently_in_ssh_session
