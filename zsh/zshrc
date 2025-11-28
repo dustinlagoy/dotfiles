@@ -335,6 +335,8 @@ history(){
 }
 alias hist='history'
 
+export EDITOR="${HOME}/dotfiles/zsh/editor.sh"
+
 precmd() {
     if currently_in_ssh_session
     then
