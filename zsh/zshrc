@@ -80,6 +80,38 @@ launch_zellij() {
     fi
 }
 
+pick_zellij() {
+    setopt NULL_GLOB
+    sessions=("${(f)$(zellij ls -s 2>/dev/null)}")
+    echo "zellij sessions: $sessions"
+    
+    matches=()
+    for session in "${sessions[@]}"; do
+      files=("$HOME"/.cache/zellij/*/session_info/"$session"/session-metadata.kdl)
+      for meta in "${files[@]}"; do
+        if [[ -f "$meta" ]]
+        then
+          # echo "try $meta"
+          if [[ $(grep "connected_clients 0" "$meta") != "" ]]
+          then
+            # echo "match $meta"
+            matches+=("$session")
+            break
+          fi
+        fi
+      done
+    done
+    
+    if [[ ${#matches[@]} == 0 ]]
+    then
+        echo "launch fresh zellij"
+        exec zellij    
+    fi
+
+    echo "pick zellij session"
+    zellij attach $(printf '%s\n' "${matches[@]}" | fzf)
+}
+
 check_dotfiles() {
     if [ -d $HOME/dotfiles ]
     then
