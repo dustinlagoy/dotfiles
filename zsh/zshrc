@@ -76,7 +76,7 @@ setup_ssh_session() {
 launch_zellij() {
     if [[ ! -v ZELLIJ ]]; then
         echo "launch zellij"
-        exec zellij attach -c
+        exec zellij
     fi
 }
 
