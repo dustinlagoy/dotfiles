@@ -134,7 +134,10 @@ autoload -Uz compinit
 compinit
 
 # Source system specific settings
-source ~/.zprofile
+if [[ -f ~/.zprofile ]]
+then
+    source ~/.zprofile
+fi
 
 HISTFILE=~/.histfile
 HISTSIZE=16384
