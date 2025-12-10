@@ -196,7 +196,11 @@ bindkey -M visual "a" append-word-end
 source <(fzf --zsh)
 export FZF_CTRL_R_OPTS="--wrap"
 
-export PATH="$HOME/.local/bin:$PATH"
+export TERM=xterm-256color
+LD_LIBRARY_PATH=""
+export PATH="$HOME/.local/bin:$HOME/.local/go/bin:$PATH"
+export PINENTRY_USER_DATA=USE_TTY=1
+export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
 
 alias :q="exit"
 alias ls='ls --color'
@@ -204,6 +208,13 @@ alias ll='ls --color -lah'
 # alias vi='vim'
 alias rm='rm -i'
 alias grep='grep --color'
+
+crush () {
+    CRUSH_CODER_V2=true \
+    AZURE_OPENAI_API_VERSION=2025-04-01-preview \
+    AZURE_OPENAI_API_KEY="$(gopass ai-zone/keys gpt-5-chat-key 2>/dev/null || read -e '?Azure key: ')" \
+    $HOME/go/bin/crush $@
+}
 
 hx() {
     if [ -d ~/src/helix-image ]

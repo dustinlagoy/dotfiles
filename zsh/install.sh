@@ -1,6 +1,5 @@
 #!/bin/bash
 ../link.sh "$(pwd)/zshrc" "$HOME/.zshrc"
-../link.sh "$(pwd)/zprofile" "$HOME/.zprofile"
 ../link.sh "$(pwd)/p10k.zsh" "$HOME/.p10k.zsh"
 mkdir -p "$HOME/.config/zellij"
 ../link.sh "$(pwd)/zellij.kdl" "$HOME/.config/zellij/config.kdl"
