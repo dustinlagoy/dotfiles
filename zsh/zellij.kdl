@@ -1,5 +1,7 @@
 keybinds clear-defaults=true {
     locked {
+        bind "PageDown" { HalfPageScrollDown; }
+        bind "PageUp" { HalfPageScrollUp; }
         bind "Ctrl g" { SwitchToMode "normal"; }
     }
     pane {
