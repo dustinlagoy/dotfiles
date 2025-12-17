@@ -1,15 +1,23 @@
 use-grammars = { only = [
-  "awk", "bash", "regex",
-  "cmake", "cpp", "c", "make",
-  "diff", "gitattributes", "git-commit", "git-config", "gitignore", "git-rebase",
+  "awk", "bash", "regex", "perl", "ghostty",
+  "cmake", "cpp", "c", "make", "strace",
+  "diff", "gitattributes", "gitcommit", "git-config", "gitignore", "git-rebase",
+  "comment",
   "dockerfile",
-  "hosts", "passwd",
-  "json", "toml", "xml", "yaml",
-  "markdown", "mermaid",
-  "css", "html", "javascript",
-  "python",
-  "rust",
-  "typst"
+  "hosts", "passwd", "sshclientconfig", "log",
+  "json", "graphql", "toml", "xml", "yaml", "json5", "jq", "flatbuffers", "ini",
+  "markdown", "mermaid", "markdown_inline",
+  "html", "css", "javascript", "typescript", "robots", "php",
+  "go", "go-format-string", "gomod", "gotmpl", "gowork",
+  "nginx", "caddyfile",
+  "python", "requirements", "cython",
+  "debian",
+  "doxyfile",
+  "rust", "rust-format-args",
+  "typst", "latex", "bibtex",
+  "vhdl", "tcl",
+  "sql",
+  "todotxt", "csv",
 ]}
 
 [[language]]
@@ -26,7 +34,7 @@ auto-format = true
 name = "markdown"
 language-servers = ["harper-ls", "marksman", "lsp-ai"]
 # comment-token = "-"
-comment-tokens = ["-", "+", "*", "1.", ">", "- [ ]"]
+comment-tokens = ["-", "+", "*", ">", "- [ ]", "1.", "2.", "3.", "4.", "5.", "6.", "7.", "8.", "9.", "10.", "11.", "12.", "13.", "14.", "15.", "16.", "17.", "18.", "19.", "20."]
 auto-format = true
 formatter = { command = "prettier", args = ["--parser", "markdown", "--tab-width", "4"] }
 
