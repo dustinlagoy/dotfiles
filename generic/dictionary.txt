@@ -16,6 +16,7 @@ MDA
 Matt
 NEMA
 NRAO
+Nyquist
 P4
 SR8
 Sanjana
@@ -40,6 +41,7 @@ filterbank
 loopback
 multicast
 packetization
+polarizations
 polyphase
 sideband
 testbench

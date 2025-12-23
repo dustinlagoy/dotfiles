@@ -8,6 +8,9 @@
     "tui": {
       "compact_mode": false
     },
+    "disabled_tools": [
+      "agentic_fetch"
+    ],
     "context_paths": [
       "/not/.config/crush/long.md"
     ]

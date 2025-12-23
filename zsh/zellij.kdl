@@ -1,4 +1,8 @@
 keybinds clear-defaults=true {
+    normal {
+        bind "Ctrl PageDown" { PageScrollDown; }
+        bind "Ctrl PageUp" { PageScrollUp; }
+    }
     locked {
         bind "PageDown" { HalfPageScrollDown; }
         bind "PageUp" { HalfPageScrollUp; }
