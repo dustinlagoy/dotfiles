@@ -1,14 +1,9 @@
 #!/bin/bash
 ../link.sh "$(pwd)/zshrc" "$HOME/.zshrc"
-../link.sh "$(pwd)/p10k.zsh" "$HOME/.p10k.zsh"
+../link.sh "$(pwd)/starship.toml" "$HOME/.config/starship.toml"
 mkdir -p "$HOME/.config/zellij"
 ../link.sh "$(pwd)/zellij.kdl" "$HOME/.config/zellij/config.kdl"
-if [ -d ~/.powerlevel10k ]
-then
-  (cd ~/.powerlevel10k; git fetch --quiet --depth=1; git reset --quiet --hard origin/master)
-else
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.powerlevel10k
-fi
+curl -sS https://starship.rs/install.sh | sh -s -- -b $HOME/.local/bin --yes >/dev/null
 mkdir -p ~/.local/bin
 arch="x86_64"
 curl -sL https://github.com/zellij-org/zellij/releases/latest/download/zellij-$arch-unknown-linux-musl.tar.gz | tar -xzf - -C ~/.local/bin
