@@ -188,6 +188,25 @@ bindkey -M visual "a" append-word-end
 
 source <(fzf --zsh)
 export FZF_CTRL_R_OPTS="--wrap"
+fzf-history-widget() {
+  # adapted from fzf --zsh, added -i and -n to show command dates
+  local selected
+  setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases noglob nobash_rematch 2> /dev/null
+  selected="$(fc -rinl 1 | awk '{ cmd=$0; sub(/^[ \t]*[0-9]+\**[ \t]+/, "", cmd); if (!seen[cmd]++) print $0 }' |
+      FZF_DEFAULT_OPTS=$(__fzf_defaults "" "-n2..,.. --scheme=history --bind=ctrl-r:toggle-sort --wrap-sign '\t↳ ' --highlight-line ${FZF_CTRL_R_OPTS-} --query=${(qqq)LBUFFER} +m") \
+      FZF_DEFAULT_OPTS_FILE='' $(__fzfcmd))"
+  local ret=$?
+  if [ -n "$selected" ]; then
+    if [[ $(awk '{print $1; exit}' <<< "$selected") =~ ^[1-9][0-9]* ]]; then
+      zle vi-fetch-history -n $MATCH
+    else # selected is a custom query, not from history
+      LBUFFER="$selected"
+    fi
+  fi
+  zle reset-prompt
+  return $ret
+}
+
 
 alias :q="exit"
 alias ls='ls --color'
@@ -328,7 +347,7 @@ dex() {
 }
 
 history(){
-    command sed 's/^. [0-9]*...//' < $HOME/.histfile | grep -i --color "$@"
+    fc -inl 1 | grep -i --color "$@"
 }
 alias hist='history'
 
