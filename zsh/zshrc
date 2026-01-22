@@ -197,11 +197,7 @@ fzf-history-widget() {
       FZF_DEFAULT_OPTS_FILE='' $(__fzfcmd))"
   local ret=$?
   if [ -n "$selected" ]; then
-    if [[ $(awk '{print $1; exit}' <<< "$selected") =~ ^[1-9][0-9]* ]]; then
-      zle vi-fetch-history -n $MATCH
-    else # selected is a custom query, not from history
-      LBUFFER="$selected"
-    fi
+      LBUFFER=$(sed 's/[^ ]* [^ ]* *//' <<< "$selected")
   fi
   zle reset-prompt
   return $ret
