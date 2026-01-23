@@ -255,6 +255,7 @@ plugins {
 // eg. "file:/path/to/my-plugin.wasm"
 // eg. "https://example.com/my-plugin.wasm"
 load_plugins {
+    "https://codeberg.org/api/packages/dustinlagoy/generic/zellij-switcher/latest/zellij-switcher.wasm"
 }
 web_client {
     font "monospace"
