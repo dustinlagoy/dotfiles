@@ -2,9 +2,9 @@
     name = Dustin Lagoy
 	email = dustin@lagoy.org
 [log]
-    date = short
+    date = "format-local:%y-%m-%d %H:%m"
 [format]
-    pretty = "%C(yellow) %h%Creset%C(red)%d%Creset %Cgreen%cd%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset"
+    pretty = "%C(yellow)%h%Creset %C(green)%cd%Creset %C(auto)%(decorate:tag=,prefix=,suffix=)%Creset\n    %s %C(blue)<%an>"
 [alias]
     l = log --branches --remotes --tags --graph --notes HEAD -n 17
     d = difftool
@@ -42,6 +42,7 @@
 [blame]
     coloring=repeatedLines
     coloring=highlightRecent
+    date = "format-local:%y-%m-%d %H:%m"
 [color "blame"]
     # light gray
     repeatedLines = 145
