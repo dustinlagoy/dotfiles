@@ -7,7 +7,7 @@ use-grammars = { only = [
   "hosts", "passwd", "sshclientconfig", "log",
   "json", "graphql", "toml", "xml", "yaml", "json5", "jq", "flatbuffers", "ini",
   "markdown", "mermaid", "markdown_inline",
-  "html", "css", "javascript", "typescript", "robots", "php",
+  "html", "css", "javascript", "typescript", "robots", "php", "ruby",
   "go", "go-format-string", "gomod", "gotmpl", "gowork",
   "nginx", "caddyfile",
   "python", "requirements", "cython",
