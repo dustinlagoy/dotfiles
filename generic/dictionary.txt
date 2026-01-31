@@ -3,9 +3,11 @@ ATAC
 Benoit
 BittWare
 Christophe
+DAC
 DHCP
 ECI
 FW
+FEC
 Galt
 Gbps
 HW
@@ -27,6 +29,7 @@ Tofino
 VLAN
 VLANs
 VLBI
+WIFP
 ZR
 anechoic
 autocorrelation
@@ -48,3 +51,4 @@ testbench
 unicast
 visibilities
 wideband
+todo
