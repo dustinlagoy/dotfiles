@@ -213,7 +213,6 @@ alias grep='grep --color'
 
 crush () {
     CRUSH_CODER_V2=true \
-    AZURE_OPENAI_API_VERSION=2025-04-01-preview \
     AZURE_OPENAI_API_KEY="$(gopass ai-zone/keys gpt-5-chat-key 2>/dev/null || read -e '?Azure key: ')" \
     $HOME/go/bin/crush $@
 }
