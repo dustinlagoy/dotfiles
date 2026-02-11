@@ -213,7 +213,7 @@ alias grep='grep --color'
 
 crush () {
     CRUSH_CODER_V2=true \
-    AZURE_OPENAI_API_KEY="$(gopass ai-zone/keys gpt-5-chat-key 2>/dev/null || read -e '?Azure key: ')" \
+    AZURE_OPENAI_API_KEY="$(gopass ai-zone/keys gpt-5-chat-key 2>/dev/null || read -se '?Azure key: ')" \
     $HOME/go/bin/crush $@
 }
 
@@ -263,7 +263,7 @@ spin() {
 }
 
 gcred() {
-    pw=$(gopass websites/git-collab.nrc-cnrc.gc.ca/dustin.lagoy read-only)
+    pw=$(gopass websites/git-collab.nrc-cnrc.gc.ca/dustin.lagoy read-only 2>/dev/null || read -se '?git-collab token: ')
     export cred="protocol=https
 host=git-collab.nrc-cnrc.gc.ca
 username=dustin.lagoy
