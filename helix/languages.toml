@@ -123,6 +123,9 @@ linters.ToDoHyphen = false
 [language-server.tinymist]
 command = "/root/.local/bin/tinymist"
 
+[language-server.rust-analyzer.config]
+check.command = "clippy"
+
 [language-server.lsp-ai]
 command = "lsp-ai"
 timeout = 300
