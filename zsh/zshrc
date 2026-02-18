@@ -312,10 +312,26 @@ prun() {
 
 dex() {
     args="exec -it"
-    if [[ $1 == "-r" ]] then
-        args="${args} -u 0"
-        shift
+    add_cred=0
+
+    while getopts ":rc" opt; do
+        case "$opt" in
+            r) args="${args} -u 0" ;;
+            c) add_cred=1 ;;
+            :) printf "Missing argument for -%s\n" "$OPTARG"; return 2 ;;
+            \?) printf "Unknown option: -%s\n" "$OPTARG"; return 2 ;;
+        esac
+    done
+    shift $(( OPTIND - 1 ))
+
+    if [[ $add_cred == 1 ]]
+    then
+	      pw=$(gopass websites/git-collab.nrc-cnrc.gc.ca/dustin.lagoy read-only)
+	      export cred="protocol=https\nhost=git-collab.nrc-cnrc.gc.ca\nusername=dustin.lagoy\npassword=$pw"
+        unset pw
+        args="${args} -e cred"
     fi
+
     dir=$PWD
     subdir=""
     while;
@@ -337,8 +353,16 @@ dex() {
     base=$(docker inspect $container -f "{{.Config.WorkingDir}}")
     dir="${base}/$subdir"
     args="${args} -w ${dir}"
-    echo "${=args} $container $@"
-    docker ${=args} $container $@
+    if [[ $add_cred == 1 ]]
+    then
+        cmd="docker ${=args} $container /bin/bash -c 'git config --global credential.helper "cache" && echo -e "\$cred" | git credential approve && $@'"
+        echo $cmd
+        eval $cmd
+    else
+        echo "${=args} $container $@"
+        docker ${=args} $container $@
+    fi
+    unset cred
 }
 
 history(){
