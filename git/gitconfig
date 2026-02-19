@@ -6,7 +6,7 @@
 [format]
     pretty = "%C(yellow)%h%Creset %C(green)%cd%Creset %C(auto)%D%Creset\n    %s %C(blue)<%an>"
 [alias]
-    l = !git log --branches --remotes --tags --graph --notes HEAD -n 17 --color=always | sed -e 's,*,●,' -e 's,|,│,g' -e 's,/,╱,g' -e 's,\\\\,╲,g'
+    l = !git log --branches --remotes --tags --graph --notes HEAD -n 17 --color=always | sed -e 's,*,●,' -e 's,|\\x1b,│\\x1b,g' -e 's,/\\x1b,╱\\x1b,g' -e 's,\\\\\\x1b,╲\\x1b,g'
     d = difftool
 [pager]
     log = "$HOME/dotfiles/git/pager.sh | less"
