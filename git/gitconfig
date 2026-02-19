@@ -4,7 +4,7 @@
 [log]
     date = "format-local:%y-%m-%d %H:%m"
 [format]
-    pretty = "%C(yellow)%h%Creset %C(green)%cd%Creset %C(auto)%(decorate:tag=,prefix=,suffix=)%Creset\n    %s %C(blue)<%an>"
+    pretty = "%C(yellow)%h%Creset %C(green)%cd%Creset %C(auto)%D%Creset\n    %s %C(blue)<%an>"
 [alias]
     l = !git log --branches --remotes --tags --graph --notes HEAD -n 17 --color=always | sed -e 's,*,●,' -e 's,|,│,g' -e 's,/,╱,g' -e 's,\\\\,╲,g'
     d = difftool
