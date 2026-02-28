@@ -27,7 +27,7 @@ language-servers = ["efm"]
 
 [[language]]
 name = "rust"
-language-servers = ["rust-analyzer", "lsp-ai"]
+language-servers = ["rust-analyzer", "harper-ls", "lsp-ai"]
 auto-format = true
 
 [[language]]
@@ -44,12 +44,12 @@ indent = { tab-width = 16, unit = "\t" }
 
 [[language]]
 name = "go"
-language-servers = ["gopls", "lsp-ai"]
+language-servers = ["gopls", "harper-ls", "lsp-ai"]
 formatter = { command = "golines" }
 
 [[language]]
 name = "python"
-language-servers = ["pylsp", "lsp-ai"]
+language-servers = ["pylsp", "harper-ls", "lsp-ai"]
 auto-format = true
 formatter = { command = "bash", args = ["-c", "isort - | black -"] }
 
