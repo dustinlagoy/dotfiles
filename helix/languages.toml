@@ -85,10 +85,6 @@ soft-wrap.wrap-at-text-width = true
 '`' = '`'
 '$' = '$'
 
-[[grammar]]
-name = "typst"
-source = { path = "/home/lagoyd/src/uben0-tree-sitter-typst" }
-
 [language-server.gopls]
 command = "gopls"
 args = ["-logfile=/tmp/gopls.log", "serve"]
