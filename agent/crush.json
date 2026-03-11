@@ -16,9 +16,9 @@
     ]
   },
   "models": {
-    "large": {"model":"NRC-Global-gpt-5.1","provider":"azure"},
-    "medium": {"model":"NRC-Global-gpt-5.1","provider":"azure"},
-    "small": {"model":"NRC-Global-gpt-5.1","provider":"azure"}
+    "large": {"model":"NRC-Global-gpt-5.2","provider":"azure"},
+    "medium": {"model":"NRC-Global-gpt-5.2","provider":"azure"},
+    "small": {"model":"NRC-Global-gpt-5.2","provider":"azure"}
   },
   "mcp": {
     "markitdown": {
@@ -34,6 +34,25 @@
       "type": "azure",
       "base_url": "https://efim-m4muq80z-eastus2.cognitiveservices.azure.com",
       "models": [
+        {
+          "id": "NRC-Global-gpt-5.2",
+          "name": "NRC GPT-5.2",
+          "cost_per_1m_in": 1.25,
+          "cost_per_1m_out": 10,
+          "cost_per_1m_in_cached": 0.25,
+          "cost_per_1m_out_cached": 0.25,
+          "context_window": 400000,
+          "default_max_tokens": 128000,
+          "can_reason": true,
+          "reasoning_levels": [
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ],
+          "default_reasoning_effort": "minimal",
+          "supports_attachments": true
+        },
         {
           "id": "NRC-Global-gpt-5.1",
           "name": "NRC GPT-5.1",
