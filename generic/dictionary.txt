@@ -7,8 +7,8 @@ Christophe
 DAC
 DHCP
 ECI
-FW
 FEC
+FW
 Galt
 Gbps
 HW
@@ -49,7 +49,7 @@ polarizations
 polyphase
 sideband
 testbench
+todo
 unicast
 visibilities
 wideband
-todo
