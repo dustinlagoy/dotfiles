@@ -4,8 +4,12 @@ root-markers:
 lint-debounce: 1s
 tools:
   dockerfile-hadolint: &dockerfile-hadolint
-    lint-command: 'hadolint'
+    lint-command: 'hadolint --no-color'
     lint-formats:
+      - '%f:%l %*[^ 0-9]%n %trror: %m'
+      - '%f:%l %*[^ 0-9]%n %tarning: %m'
+      - '%f:%l %*[^ 0-9]%n %tnfo: %m'
+      - '%f:%l %*[^ 0-9]%n %ttyle: %m'
       - '%f:%l %m'
 languages:
   dockerfile:
