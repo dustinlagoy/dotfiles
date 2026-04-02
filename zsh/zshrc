@@ -211,10 +211,25 @@ alias ll='ls --color -lah'
 alias rm='rm -i'
 alias grep='grep --color'
 
-crush () {
+crush() {
+    temp=0
+    while getopts ":t" opt; do
+        case "$opt" in
+            t) temp=1 ;;
+            :) printf "Missing argument for -%s\n" "$OPTARG"; return 2 ;;
+            \?) printf "Unknown option: -%s\n" "$OPTARG"; return 2 ;;
+        esac
+    done
+    shift $(( OPTIND - 1 ))
+    args="run --rm -it -e TERM -w /work"
+    if [[ $temp == 0 ]]; then
+        args="$args -v .:/work"
+    fi
+    cmd="docker ${=args} crush $@"
+    docker build -t crush - < $HOME/dotfiles/agent/crush.Dockerfile && \
     CRUSH_CODER_V2=true \
     AZURE_OPENAI_API_KEY="$(gopass ai-zone/keys gpt-5-chat-key 2>/dev/null || read -se '?Azure key: ')" \
-    $HOME/go/bin/crush $@
+    eval $cmd
 }
 
 hx() {
