@@ -243,6 +243,36 @@
           "has_reasoning_efforts": false
         },
         {
+          "name": "Qwen 3.5 4B",
+          "id": "qwen3.5:4b",
+          "context_window": 64000,
+          "default_max_tokens": 20000,
+          "can_reason": true,
+          "has_reasoning_efforts": true,
+          "reasoning_levels": [
+            "none",
+            "low",
+            "medium",
+            "high"
+          ],
+          "default_reasoning_effort": "medium"
+        },
+        {
+          "name": "Qwen 3.5 9B",
+          "id": "qwen3.5:9b",
+          "context_window": 64000,
+          "default_max_tokens": 20000,
+          "can_reason": true,
+          "has_reasoning_efforts": true,
+          "reasoning_levels": [
+            "none",
+            "low",
+            "medium",
+            "high"
+          ],
+          "default_reasoning_effort": "medium"
+        },
+        {
           "name": "Qwen 3.5 27B",
           "id": "qwen3.5:27b",
           "context_window": 64000,
