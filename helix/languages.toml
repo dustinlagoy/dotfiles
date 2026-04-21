@@ -43,6 +43,10 @@ name = "csv"
 indent = { tab-width = 16, unit = "\t" }
 
 [[language]]
+name = "json"
+formatter = { command = "prettier", args = ["--parser", "json", "--tab-width", "2"] }
+
+[[language]]
 name = "go"
 language-servers = ["gopls", "harper-ls", "lsp-ai"]
 formatter = { command = "golines" }
