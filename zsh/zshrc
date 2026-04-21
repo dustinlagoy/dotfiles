@@ -222,13 +222,13 @@ crush() {
     done
     shift $(( OPTIND - 1 ))
     args="run --rm -it -e TERM -w /work"
+    args="$args -e CRUSH_CODER_V2=true"
+    args="$args -e AZURE_OPENAI_API_KEY=\"$(gopass ai-zone/keys gpt-5-chat-key 2>/dev/null || read -se '?Azure key: ')\""
     if [[ $temp == 0 ]]; then
         args="$args -v .:/work"
     fi
     cmd="docker ${=args} crush $@"
     docker build -t crush - < $HOME/dotfiles/agent/crush.Dockerfile && \
-    CRUSH_CODER_V2=true \
-    AZURE_OPENAI_API_KEY="$(gopass ai-zone/keys gpt-5-chat-key 2>/dev/null || read -se '?Azure key: ')" \
     eval $cmd
 }
 
