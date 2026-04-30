@@ -53,7 +53,7 @@ formatter = { command = "golines" }
 
 [[language]]
 name = "python"
-language-servers = ["pylsp", "harper-ls", "lsp-ai"]
+language-servers = ["ty", "harper-ls", "lsp-ai"]
 auto-format = true
 formatter = { command = "bash", args = ["-c", "isort - | black -"] }
 
@@ -100,6 +100,10 @@ command = "ltex-ls"
 
 [language-server.typst-lsp]
 command = "typst-lsp"
+
+[language-server.ty]
+command = "ty"
+args = ["server"]
 
 [language-server.pylsp]
 [language-server.pylsp.config]
