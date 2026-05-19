@@ -46,7 +46,7 @@
           "cost_per_1m_in_cached": 0.25,
           "cost_per_1m_out_cached": 0.25,
           "context_window": 400000,
-          "default_max_tokens": 128000,
+          "default_max_completion_tokens": 128000,
           "can_reason": true,
           "reasoning_levels": ["none", "low", "medium", "high", "xhigh"],
           "default_reasoning_effort": "medium",

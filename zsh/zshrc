@@ -221,7 +221,7 @@ crush() {
         esac
     done
     shift $(( OPTIND - 1 ))
-    args="run --rm -it -e TERM -w /work"
+    args="run --rm -it -e TERM -v $HOME/dotfiles/agent/crush.json:/root/.config/crush/crush.json -w /work"
     args="$args -e CRUSH_CODER_V2=true"
     args="$args -e AZURE_OPENAI_API_KEY=\"$(gopass ai-zone/keys gpt-5-chat-key 2>/dev/null || read -se '?Azure key: ')\""
     if [[ $temp == 0 ]]; then

@@ -2,7 +2,7 @@
     name = Dustin Lagoy
 	email = dustin@lagoy.org
 [log]
-    date = "format-local:%y-%m-%d %H:%m"
+    date = "format-local:%y-%m-%d %H:%M"
 [format]
     pretty = "%C(yellow)%h%Creset %C(green)%cd%Creset %C(auto)%D%Creset\n    %s %C(blue)<%an>"
 [alias]
