@@ -31,6 +31,17 @@ language-servers = ["rust-analyzer", "harper-ls", "lsp-ai"]
 auto-format = true
 
 [[language]]
+name = "todotxt"
+comment-tokens = [
+  "(A)", "(B)", "(C)", "(D)",
+  "+atac", "(A) +atac", "(B) +atac",
+  "+sw", "(A) +sw", "(B) +sw",
+  "+solar", "(A) +solar", "(B) +solar",
+  "+hire", "(A) +hire", "(B) +hire",
+  "+mercury", "(A) +mercury", "(B) +mercury",
+]
+
+[[language]]
 name = "markdown"
 language-servers = ["harper-ls", "marksman", "lsp-ai"]
 # comment-token = "-"
@@ -53,7 +64,7 @@ formatter = { command = "golines" }
 
 [[language]]
 name = "python"
-language-servers = ["ty", "harper-ls", "lsp-ai"]
+language-servers = ["ty", "pylsp", "harper-ls", "lsp-ai"]
 auto-format = true
 formatter = { command = "bash", args = ["-c", "isort - | black -"] }
 
@@ -147,6 +158,12 @@ memory.file_store = {}
 # completion.parameters.max_context = 4096
 # completion.parameters.options.num_predict = 64
 # completion.parameters.options.stop = ["\n"]
+[language-server.lsp-ai.config.models.gpt55]
+type = "open_ai"
+chat_endpoint = "https://efim-m4muq80z-eastus2.cognitiveservices.azure.com/openai/v1/chat/completions"
+completions_endpoint = "https://efim-m4muq80z-eastus2.cognitiveservices.azure.com/openai/v1/chat/completions"
+model = "NRC-Global-GPT-5.5"
+auth_token_env_var_name = "AGENT_KEY"
 [language-server.lsp-ai.config.models.devstral]
 type = "ollama"
 chat_endpoint = "http://ollama:11434/api/chat"
@@ -178,13 +195,17 @@ chat_endpoint = "http://ollama:11434/api/chat"
 generate_endpoint = "http://ollama:11434/api/generate"
 model = "deepseek-r1:32b"
 [language-server.lsp-ai.config.completion]
-model = "devstral"
+model = "gpt55"
 parameters.max_context = 4096
 parameters.options.num_predict = 512
 parameters.options.stop = ["\n"]
+parameters.messages = [
+    { role = "system", content = "You are an AI coding assistant. Your task is to complete code snippets. The user's cursor position is marked by \"<CURSOR>\". Follow these steps:\n\n1. Analyze the code context and the cursor position.\n2. Provide your chain of thought reasoning, wrapped in <reasoning> tags. Include thoughts about the cursor position, what needs to be completed, and any necessary formatting.\n3. Determine the appropriate code to complete the current thought, including finishing partial words or lines.\n4. Replace \"<CURSOR>\" with the necessary code, ensuring proper formatting and line breaks.\n5. Wrap your code solution in <answer> tags.\n\nYour response should always include both the reasoning and the answer. Pay special attention to completing partial words or lines before adding new lines of code.\n\n<examples>\n<example>\nUser input:\n--main.py--\n# A function that reads in user inpu<CURSOR>\n\nResponse:\n<reasoning>\n1. The cursor is positioned after \"inpu\" in a comment describing a function that reads user input.\n2. We need to complete the word \"input\" in the comment first.\n3. After completing the comment, we should add a new line before defining the function.\n4. The function should use Python's built-in `input()` function to read user input.\n5. We'll name the function descriptively and include a return statement.\n</reasoning>\n\n<answer>t\ndef read_user_input():\n    user_input = input(\"Enter your input: \")\n    return user_input\n</answer>\n</example>\n\n<example>\nUser input:\n--main.py--\ndef fibonacci(n):\n    if n <= 1:\n        return n\n    else:\n        re<CURSOR>\n\n\nResponse:\n<reasoning>\n1. The cursor is positioned after \"re\" in the 'else' clause of a recursive Fibonacci function.\n2. We need to complete the return statement for the recursive case.\n3. The \"re\" already present likely stands for \"return\", so we'll continue from there.\n4. The Fibonacci sequence is the sum of the two preceding numbers.\n5. We should return the sum of fibonacci(n-1) and fibonacci(n-2).\n</reasoning>\n\n<answer>turn fibonacci(n-1) + fibonacci(n-2)</answer>\n</example>\n</examples>"},
+    { role = "user", content = "{CODE}" }
+]
 [[language-server.lsp-ai.config.actions]]
-action_display_name = "Complete devstral"
-model = "devstral"
+action_display_name = "Complete gpt55"
+model = "gpt55"
 parameters.max_context = 4096
 parameters.options.num_predict = 512
 parameters.options.stop = ["<file_sep>", "\n\n"]
@@ -219,8 +240,8 @@ parameters.fim.end = "<｜fim▁end｜>"
 parameters.options.num_predict = 512
 parameters.options.stop = ["<file_sep>", "\n\n"]
 [[language-server.lsp-ai.config.actions]]
-action_display_name = "FIM Complete devstral"
-model = "devstral"
+action_display_name = "FIM Complete gpt55"
+model = "gpt55"
 parameters.max_context = 4096
 parameters.fim.start = "<｜fim▁begin｜>"
 parameters.fim.middle = "<｜fim▁hole｜>"
