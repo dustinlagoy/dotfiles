@@ -33,6 +33,7 @@ auto-format = true
 [[language]]
 name = "todotxt"
 comment-tokens = [
+  "x",
   "(A)", "(B)", "(C)", "(D)",
   "+atac", "(A) +atac", "(B) +atac",
   "+sw", "(A) +sw", "(B) +sw",
