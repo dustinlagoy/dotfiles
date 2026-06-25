@@ -2,7 +2,7 @@
     name = Dustin Lagoy
 	email = dustin@lagoy.org
 [log]
-    date = "format-local:%y-%m-%d %H:%M"
+    date = "format-local:%y-%m-%d %H:%M:%S"
 [format]
     pretty = "%C(yellow)%h%Creset %C(green)%cd%Creset %C(auto)%D%Creset\n    %s %C(blue)<%an>"
 [alias]
@@ -51,3 +51,9 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
+# [url "ssh://git@git-collab.nrc-cnrc.gc.ca/"]
+# 	insteadOf = https://git-collab.nrc-cnrc.gc.ca/
+# [url "ssh://git@git-collab.nrc-cnrc.gc.ca/"]
+# 	insteadOf = http://git-collab.nrc-cnrc.gc.ca/
+[safe]
+	directory = /work
