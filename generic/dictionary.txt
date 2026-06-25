@@ -23,7 +23,6 @@ Nyquist
 P4
 SR8
 Sanjana
-TODO
 TPGS
 TeraBox
 Tofino
@@ -42,6 +41,7 @@ correlators
 deinterleave
 deinterleaving
 filterbank
+interferometry
 loopback
 multicast
 packetization
