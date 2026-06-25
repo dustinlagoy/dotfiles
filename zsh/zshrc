@@ -83,7 +83,7 @@ launch_zellij() {
 check_dotfiles() {
     if [ -d $HOME/dotfiles ]
     then
-        check=$(cd $HOME/dotfiles && git fetch --dry-run)
+        check=$(cd $HOME/dotfiles && git fetch --dry-run 2>&1)
         if [[ $check != "" ]]
         then
             echo "changes detected in dotfiles:\n$check"
@@ -356,7 +356,7 @@ dex() {
             echo "no container found"
             return
         fi
-        container=$(docker ps --format "{{.Names}}" --filter "volume=$dir" -n 1)
+        container=$(docker ps --format "{{.Names}}\t{{.Command}}" --filter "volume=$dir" | fzf -1 | cut -f1)
         if [[ $container == "" ]]
         then
             subdir="$(basename $dir)/$subdir"
