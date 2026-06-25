@@ -13,6 +13,8 @@ auto-save.focus-lost = true
 [editor.auto-save.after-delay]
 enable = true
 timeout = 3000
+[editor.file-picker]
+hidden = false
 [editor.soft-wrap]
 enable = true
 [editor.indent-guides]
