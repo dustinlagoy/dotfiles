@@ -3,24 +3,22 @@ run_zsh_setup() {
     # - connected via local tty: run/use ssh agent
     # - connected remotely: start zellij, use remote agent and fallback to local
     # - running in container: use bound agent
-    if ! ssh_agent_configured
+    if currently_in_ssh_tty
     then
-        echo "no ssh agent configured"
-        if can_run_ssh_agent && ! local_ssh_agent_running
+        echo "in ssh tty"
+        setup_ssh_session
+        if test -z $ZSH_EXECUTION_STRING; then
+            launch_zellij
+        fi
+    else
+        if ! local_ssh_agent_running && can_run_ssh_agent
         then
+            echo "starting ssh agent"
             start_ssh_agent
         fi
         if local_ssh_agent_running
         then
             eval "$(<~/.ssh-agent-thing)" > /dev/null
-        fi
-    fi
-    # Run ssh agent if not in an ssh session
-    if currently_in_ssh_tty; then
-        echo "in ssh tty"
-        setup_ssh_session
-        if test -z $ZSH_EXECUTION_STRING; then
-            launch_zellij
         fi
     fi
 }
@@ -237,9 +235,20 @@ hx() {
     then
         (cd ~/src/helix-image; git pull >/dev/null &)
     else
-        git clone --depth 1 git@git-collab.nrc-cnrc.gc.ca:haa/draosw/proto/helix-image.git ~/src/helix-image
+        git clone git@git-collab.nrc-cnrc.gc.ca:haa/draosw/proto/helix-image.git ~/src/helix-image
     fi
     ~/src/helix-image/run.sh ${@[@]}
+}
+
+dev() {
+    if [ -d ~/src/helix-image ]
+    then
+        (cd ~/src/helix-image; git pull >/dev/null &)
+    else
+        git clone git@git-collab.nrc-cnrc.gc.ca:haa/draosw/proto/helix-image.git ~/src/helix-image
+    fi
+    (cd ~/src/helix-image; git checkout devcontainers)
+    ~/src/helix-image/dev.sh ${@[@]}
 }
 
 vi() {
