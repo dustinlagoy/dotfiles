@@ -1,0 +1,12 @@
+[Unit]
+Description=backup with restic
+
+[Service]
+Type=oneshot
+Environment="DISPLAY=:0"
+ExecStart=${HOME}/dotfiles/backup/backup.sh
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

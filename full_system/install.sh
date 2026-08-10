@@ -1,5 +1,5 @@
 #!/bin/bash
-read -p "install graphical configs? (y/N): " answer
+read -p "install full system configs? (y/N): " answer
 if [[ "$answer" != [Yy]* ]]
 then
     exit 0
@@ -11,5 +11,3 @@ do
     # Run the install for each
     (cd $directory; ./install.sh) || echo "error running install.sh in $directory"
 done
-mkdir -p $HOME/.config/dunst
-../link.sh "$(pwd)/dunstrc" "$HOME/.config/dunst/dunstrc"

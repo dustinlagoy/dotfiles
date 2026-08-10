@@ -1,0 +1,9 @@
+[Unit]
+Description=backup with restic
+
+[Timer]
+OnCalendar=mon..fri 09:00:00
+Persistent=true
+
+[Install]
+WantedBy=default.target

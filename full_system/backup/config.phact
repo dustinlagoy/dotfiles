@@ -1,0 +1,12 @@
+BACKUP_PASSWORD_COMMAND="gopass show -o backup/restic-phact"
+BACKUP_REPOSITORY="sftp:lagoyd@sw.drao.nrc.ca:/data/dustin/phact"
+BACKUP_ITEMS="
+  /home/lagoyd/.config \
+  /home/lagoyd/Documents \
+  /home/lagoyd/dotfiles \
+  /home/lagoyd/.gnupg \
+  /home/lagoyd/.histfile \
+  /home/lagoyd/notes \
+  /home/lagoyd/projects \
+  /home/lagoyd/src \
+  /home/lagoyd/.ssh"

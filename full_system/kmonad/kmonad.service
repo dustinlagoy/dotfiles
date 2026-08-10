@@ -1,0 +1,11 @@
+[Unit]
+Description=kmonad keyboard service
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c "${HOME}/.local/bin/kmonad ${HOME}/dotfiles/full_system/kmonad/kmonad.kbd"
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

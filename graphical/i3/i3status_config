@@ -1,0 +1,155 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+        colors = true
+        interval = 5
+        color_good = "#FFFFFF"
+        color_bad = "#FF0000"
+        color_degraded = "#FFFF00"
+}
+
+# order += "ipv6"
+# order += "wireless _first_"
+# order += "ethernet br0"
+# order += "gitlab_pipes"
+order += "py3_pipes"
+order += "net_rate"
+# order += "battery all"
+# order += "disk /"
+#order += "load"
+#order += "memory"
+order += "mydisks"
+order += "sysdata"
+order += "volume_status speakers"
+order += "volume_status mic"
+order += "tztime unix"
+order += "tztime nz"
+order += "tztime seoul"
+# order += "tztime tokyo"
+# order += "tztime paris"
+order += "tztime utc"
+order += "tztime santiago"
+order += "tztime local"
+
+py3_pipes {
+        nerdy = false
+        url = "https://git-collab.nrc-cnrc.gc.ca"
+        token_command = "gopass show websites/git-collab.nrc-cnrc.gc.ca/dustin.lagoy read-only"
+        group = "haa/draosw"
+        days_old = 365
+        cache_interval = 15
+}
+
+wireless _first_ {
+        format_up = "W: (%quality at %essid) %ip"
+        format_down = "W: down"
+}
+
+ethernet br0 {
+        format_up = "E: %ip (%speed)"
+        format_down = "E: down"
+}
+
+net_rate {
+        interfaces = "br0"
+        format = "[\?color=total 󰛳 {total}]"
+        format_value = "{value:.1f}{unit}"
+        si_units = true
+        thresholds = [(0, "good"), (100000, "degraded"), (10000000, "bad")]
+}
+
+battery all {
+        format = "%status %percentage %remaining"
+}
+
+disk "/" {
+        format = "%avail"
+}
+
+load {
+        format = "%1min"
+}
+
+# memory {
+#         format = "%used of %available"
+#         threshold_degraded = "1G"
+#         format_degraded = "MEMORY < %available"
+# }
+
+mydisks {
+    disk = "sdb2"
+    format = "[\?color=used_percent  {used_percent}%][\?color=total ({total})]"
+    format_space = "{value:.1f}"
+    format_rate = "{value:.1f}{unit}"
+    si_units = true
+    thresholds = {
+        "free": [(0, "bad"), (10, "degraded"), (100, "good")],
+        "total": [(0, "good"), (500000, "degraded"), (10000000, "bad")],
+        "used_percent": [(0, "good"), (85, "degraded"), (95, "bad")]
+    }
+}
+sysdata {
+        format = "[\?color=cpu_used_percent  {cpu_used_percent}%] [\?color=mem_used_percent  {mem_used_percent}%]"
+}
+
+volume_status speakers {
+    command = "pactl"
+    format = "󰎇 {percentage}%"
+    format_muted = "󰽴 {percentage}%"
+    thresholds = [(0, 'bad'), (5, 'degraded'), (10, 'good')]
+}
+
+volume_status mic {
+    format = ' {percentage}%'
+    format_muted = ' {percentage}%'
+    button_down = 5
+    button_mute = 1
+    button_up = 4
+    is_input = true
+    thresholds = [(0, 'bad'), (0, 'degraded'), (15, 'good')]
+}
+
+tztime local {
+        # format = "%Y-%m-%d %H:%M:%S"
+        format = "%m-%d %H:%M:%S"
+}
+
+tztime utc {
+        format = "%d󰇧 %H:%M"
+        timezone = "UTC"
+}
+
+tztime santiago {
+        format = "%d🇨🇱%H:%M"
+        timezone = "America/Santiago"
+}
+
+tztime paris {
+        format = "%d🇫🇷%H:%M"
+        timezone = "Europe/Paris"
+}
+
+tztime tokyo {
+        format = "%d🇯🇵%H:%M"
+        timezone = "Asia/Tokyo"
+}
+
+tztime seoul {
+        format = "%d🇰🇷%H:%M"
+        timezone = "Asia/Seoul"
+}
+
+tztime nz {
+        format = "%d🇳🇿%H:%M"
+        timezone = "Pacific/Auckland"
+}
+
+tztime unix {
+        format = " %s"
+}
