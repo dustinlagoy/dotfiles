@@ -411,10 +411,10 @@ precmd() {
             eval "$(<~/.ssh-agent-thing-remote)" > /dev/null
         fi
     fi
-    set_title "${(%):-%~}"
+    set_title "${(%):-%m | %~}"
 }
 
 preexec() {
     local cmd=${1//[[:cntrl:]]/}
-    set_title "${(%):-%1~} | ${cmd:0:40}"
+    set_title "${(%):-%m | %1~} | ${cmd:0:40}"
 }
