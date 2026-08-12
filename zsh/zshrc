@@ -395,6 +395,10 @@ history(){
 }
 alias hist='history'
 
+set_title() {
+    print -n "\e]2;$1\a"
+}
+
 precmd() {
     if currently_in_ssh_session
     then
@@ -407,4 +411,10 @@ precmd() {
             eval "$(<~/.ssh-agent-thing-remote)" > /dev/null
         fi
     fi
+    set_title "${(%):-%~}"
+}
+
+preexec() {
+    local cmd=${1//[[:cntrl:]]/}
+    set_title "${(%):-%1~} | ${cmd:0:40}"
 }
