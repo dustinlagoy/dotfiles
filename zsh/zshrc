@@ -246,9 +246,9 @@ dev() {
     then
         (cd ~/src/helix-image; git pull >/dev/null &)
     else
-        git clone git@git-collab.nrc-cnrc.gc.ca:haa/draosw/proto/helix-image.git ~/src/helix-image
+        git clone git@git-collab.nrc-cnrc.gc.ca:haa/draosw/proto/helix-image.git ~/src/helix-image 1>&2
     fi
-    (cd ~/src/helix-image; git checkout devcontainers)
+    (cd ~/src/helix-image; git checkout devcontainers 1>&2)
     ~/src/helix-image/dev.sh ${@[@]}
 }
 

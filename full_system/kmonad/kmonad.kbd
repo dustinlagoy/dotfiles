@@ -1,5 +1,5 @@
 (defcfg
-  input  (device-file "/dev/input/by-id/usb-Chicony_HP_Elite_USB_Keyboard-event-kbd")
+  input  (device-file "$KMONAD_DEVICE")
   output (uinput-sink "KMonad Keyboard")
   fallthrough true
   allow-cmd true
