@@ -231,6 +231,12 @@ crush() {
     eval $cmd
 }
 
+pi() {
+    docker build -f ~/dotfiles/agent/Dockerfile.pi -t pi ~/dotfiles/agent
+    docker network create llm
+    docker run --rm -it -v ~/.pi/agent:/root/.pi/agent -v $PWD:/workspace --network llm pi
+}
+
 hx() {
     if [ -d ~/src/helix-image ]
     then
