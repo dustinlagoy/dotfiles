@@ -12,3 +12,8 @@ mkdir -p "$HOME/.claude"
 ../link.sh "$(pwd)/claude.json" "$HOME/.claude.json"
 ../link.sh "$(pwd)/curl.sh" "$HOME/.local/bin/curl.sh"
 ../link.sh "/bin/bash" "$HOME/.local/bin/du"
+if command -v uv
+then
+    uv tool install trafilatura
+fi
+exit 0

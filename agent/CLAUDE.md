@@ -6,7 +6,10 @@ For all shell commands use the bash tool in your path called `du`. Example:
 du -c 'pwd; git clone example.org/repo'
 ```
 
-## Web Access and Web Search
+## Web Search and Web Page Downloading
 
-For all web access, included downloading individual pages and running searches, use the `curl.sh` tool in your path.
+Use the `trafilatura` tool in your path for all web search and web page access that will produce HTML output.
 
+## Web Access
+
+For direct web access that should not produce HTML output, use the `curl.sh` tool in your path.
