@@ -304,6 +304,17 @@ password=$pw"
     unset pw
 }
 
+ncred() {
+    pw=$(gopass websites/gitlab.nrao.edu/dustinlagoy read-only 2>/dev/null || read -se '?gitlab.nrao.edu token: ')
+    export cred="protocol=https
+host=gitlab.nrao.edu
+username=dustin.lagoy
+password=$pw"
+    echo $cred | git credential approve
+    unset cred
+    unset pw
+}
+
 dbuild() {
     export DOCKER_BUILDKIT=1
     pw=$(gopass websites/git-collab.nrc-cnrc.gc.ca/dustin.lagoy read-only)
