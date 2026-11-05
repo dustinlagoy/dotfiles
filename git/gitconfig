@@ -8,18 +8,18 @@
 [alias]
     l = "!l() { git log --branches --remotes --tags --graph --notes HEAD -n 17 --color=always $@ | sed -e 's,*,●,' -e 's,|\\x1b,│\\x1b,g' -e 's,/\\x1b,╱\\x1b,g' -e 's,\\\\\\x1b,╲\\x1b,g' | less -RF; }; l"
     d = difftool
-[pager]
-    log = "$HOME/dotfiles/git/pager.sh | less"
-    show = "$HOME/dotfiles/git/pager.sh | less"
-    diff = "$HOME/dotfiles/git/pager.sh | less"
 [interactive]
-    diffFilter = "$HOME/dotfiles/git/pager.sh"
+    diffFilter = delta --color-only
 [core]
     autocrlf = false
     safecrlf = true
     eol = lf
+    pager = delta
+[delta]
+    navigate = true
+    line-numbers = true
 [merge]
-    tool = vimdiff
+    conflictStyle = zdiff3
     ff = false
 [pull]
     ff = only
