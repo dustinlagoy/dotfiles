@@ -3,8 +3,12 @@
 For all shell commands use the bash tool in your path called `du`. Example:
 
 ```sh
-du -c 'pwd; git clone example.org/repo'
+du -c 'git clone example.org/repo'
 ```
+
+### Avoiding Permission Prompts
+
+Keep each `du -c '...'` command to one simple command. No `;`, `&&`, `|`, `$(...)`, backticks, `$VAR` or `>` redirects. If a task needs any of those, write a script and run it with `du <name>.sh`.
 
 ## Web Search and Web Page Downloading
 

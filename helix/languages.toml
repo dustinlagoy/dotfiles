@@ -32,6 +32,7 @@ auto-format = true
 
 [[language]]
 name = "todotxt"
+language-servers = ["harper-ls"]
 comment-tokens = [
   "x",
   "(A)", "(B)", "(C)", "(D)",
