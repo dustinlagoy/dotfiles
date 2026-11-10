@@ -237,7 +237,9 @@ pi() {
     docker network create llm
     export NRC_AI_KEY=$(gopass show ai-zone/keys personal)
     export NRC_AZURE_KEY=$(gopass show ai-zone/keys gpt-5-chat-key)
-    docker run --rm -it --name pi \
+    name="pi$(echo $PWD | sed 's/[^a-zA-Z0-9_.-]/-/g')"
+    docker run --rm -it \
+        --name $name \
         -v ~/.pi/agent:/root/.pi/agent \
         -v ~/dotfiles/agent/pi:${HOME}/dotfiles/agent/pi \
         -v $PWD:/workspace \
