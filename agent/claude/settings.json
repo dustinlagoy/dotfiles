@@ -1,0 +1,4 @@
+{
+  "model": "opus[1m]",
+  "preferredNotifChannel": "terminal_bell"
+}

@@ -1,0 +1,4 @@
+{
+  "tui.altScreen.pageUp": ["pageUp", "ctrl+shift+k"],
+  "tui.altScreen.pageDown": ["pageDown", "ctrl+shift+j"]
+}

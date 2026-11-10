@@ -1,0 +1,35 @@
+{
+  "providers": {
+    "ollama": {
+      "baseUrl": "http://proc02.local:11434/v1",
+      "api": "openai-completions",
+      "apiKey": "ollama",
+      "models": [{ "id": "qwen3.8:27b" }]
+    },
+    "nrc": {
+      "baseUrl": "https://efim-m4muq80z-eastus2.cognitiveservices.azure.com/openai/v1",
+      "api": "openai-responses",
+      "apiKey": "$NRC_AZURE_KEY",
+      "models": [
+        { "id": "NRC-Global-GPT-5.4" },
+        { "id": "NRC-Global-GPT-6-luna" },
+        { "id": "NRC-Global-GPT-6-sol" },
+        { "id": "NRC-Global-GPT-6.1-sol" },
+        { "id": "NRC-Global-GPT-6-astra" }
+      ]
+    },
+    "nrc-claude": {
+      "baseUrl": "https://aizone-zoneia-api.nrc-cnrc.gc.ca/v1",
+      "api": "anthropic-messages",
+      "apiKey": "$NRC_AI_KEY"
+    },
+    "nrc-gpt": {
+      "baseUrl": "https://aizone-zoneia-api.nrc-cnrc.gc.ca/v1",
+      "api": "openai-responses",
+      "apiKey": "$NRC_AI_KEY",
+      "models": [
+        { "id": "NRC-Global-GPT-5.4" }
+      ]
+    }
+  }
+}

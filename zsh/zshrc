@@ -209,6 +209,7 @@ alias ll='ls --color -lah'
 # alias vi='vim'
 alias rm='rm -i'
 alias grep='grep --color'
+alias cat="$(command -v bat || command -v batcat || command -v cat)"
 
 crush() {
     temp=0
@@ -232,9 +233,11 @@ crush() {
 }
 
 pi() {
-    docker build -f ~/dotfiles/agent/Dockerfile.pi -t pi ~/dotfiles/agent
+    docker build -f ~/dotfiles/agent/pi/Dockerfile.pi -t pi ~/dotfiles/agent/pi
     docker network create llm
-    docker run --rm -it -v ~/.pi/agent:/root/.pi/agent -v $PWD:/workspace --network llm pi
+    export NRC_AI_KEY=$(gopass show ai-zone/keys personal)
+    export NRC_AZURE_KEY=$(gopass show ai-zone/keys gpt-5-chat-key)
+    docker run --rm -it --name pi -v ~/.pi/agent:/root/.pi/agent -v $PWD:/workspace -e NRC_AZURE_KEY -e NRC_AI_KEY --network llm pi
 }
 
 hx() {
